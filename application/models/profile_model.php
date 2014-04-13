@@ -30,6 +30,11 @@ class Profile_model extends CI_Model
     {
         $this->db->query("UPDATE profile SET profile_pic = '" . $path . "' WHERE id = '".$id."';");
     }
+    
+    public function set_personality($id, $personality, $opposite)
+    {
+        $this->db->query("UPDATE profile SET personality = '". $personality. "', personality_lookingfor = '" . $opposite . "' WHERE id = '" . $id . "'");
+    }
 
     public function update_profile($values) {
     	$this->db->query("UPDATE profile SET name='".$values['name']."', nickname ='".$values['nickname']."', description='".$values['description']."', email='".$values['email']."', birthdate='".$values['birthdate']."' WHERE id='".$values['id']."'");
