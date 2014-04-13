@@ -38,7 +38,8 @@ class Homepage extends CI_Controller
 	
 	public function view($id)
 	{
-		$data['owner'] = ($this->session->userdata('user')['id'] == $id);
+        $user = $this->session->userdata('user');
+		$data['owner'] = ($user['id'] == $id);
 		$data['profile'] = $this->Profile_model->get_profile($id);
 		$data['copyright'] = 'By Victor And Siemen';
 		$data['title'] = "Viewing profile";
