@@ -52,7 +52,10 @@ class Edit extends CI_Controller
             foreach($allbrands as $brnd)
             {
                 $box = $this->input->post('brandno' . $brnd['id']);
+<<<<<<< HEAD
                 echo $box . "<br />";
+=======
+>>>>>>> e0f50ca6f939d6dd0069229465f060c3f4c68618
                 if($box == "brands")
                 {
                     $this->Brands_model->like_brand($user['id'], $brnd['id']);
