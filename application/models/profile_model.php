@@ -20,7 +20,7 @@ class Profile_model extends CI_Model
 		$query = $this->db->get();
 		$user = $query->row();
 		
-		$querybrands = $this->db->query("SELECT `name` FROM `brands` WHERE id IN (SELECT `brand_id` FROM `brand_likes` WHERE `user_id` = '" . $id . "');");		
+		$querybrands = $this->db->query("SELECT `name` FROM `brands` WHERE id IN (SELECT `brand_id` FROM `brand_likes` WHERE `id` = '" . $id . "');");		
 		$user->brands = $querybrands->result_array();
 		
 		return $user;
@@ -29,6 +29,10 @@ class Profile_model extends CI_Model
     public function set_profile_picture_path($id, $path)
     {
         $this->db->query("UPDATE profile SET profile_pic = '" . $path . "' WHERE id = '".$id."';");
+    }
+
+    public function update_profile($values) {
+    	$this->db->query("UPDATE profile SET name='".$values['name']."', nickname ='".$values['nickname']."', description='".$values['description']."', email='".$values['email']."', birthdate='".$values['birthdate']."' WHERE id='".$values['id']."'");
     }
 }
 
