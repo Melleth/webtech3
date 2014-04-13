@@ -29,6 +29,35 @@ class Login extends CI_Controller
             $this->viewLoginForm();
         }
 	}
+    
+    public function register()
+    {
+        $data['copyright'] = 'By Victor And Siemen';
+		$data['title'] = "Register";
+        
+        $this->form_validation->set_rules('nickname', 'Nickname', 'required');
+        $this->form_validation->set_rules('realname', 'Name', 'required');
+        $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+        $this->form_validation->set_rules('description', 'Description', 'required');
+
+        $this->load->view('templates/header', $data);
+        
+        if ($this->form_validation->run() === FALSE)
+        {
+            //form failed to validate
+            $this->load->view('pages/registerform', $data);
+        }
+        else
+        {
+            //form succesfully validated
+            $this->Login_model->insert_user($this->input->post('nickname'), $this->input->post('realname'), $this->input->post('password'), $this->input->post('email'), $this->input->post('gender'), $this->input->post('birthday'), "", $this->input->post('description'), $this->input->post('genderpreference'), $this->input->post('ageMin'), $this->input->post('ageMax'));
+            $this->session->unset_userdata('loggedin');
+            $this->session->unset_userdata('user');
+            $this->output->set_header('refresh:0;url='.base_url().'index.php/login');
+        }
+        $this->load->view('templates/footer', $data);
+    }
 
 	public function viewLoginForm()
 	{		
@@ -36,6 +65,8 @@ class Login extends CI_Controller
 		$data['title'] = "Member Login";
 		$data['loginfailed'] = false;
         $data['loggedin'] = false;
+        $this->session->unset_userdata('loggedin');
+        $this->session->unset_userdata('user');
         
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'required');
