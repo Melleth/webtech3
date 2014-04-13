@@ -20,7 +20,8 @@ class Homepage extends CI_Controller
 		$data['profiles'] = $this->Profile_model->get_profiles($num);
 		$data['copyright'] = 'By Victor And Siemen';
 		$data['title'] = "Home";
-		$data['session'] = $this->session;
+		//$data['session'] = $this->session;
+		$data['user'] = $this->session->userdata('user');
 		//Seperate cases for logged in users and lurkers.
 		if($this->session->userdata('loggedin')) {
 			//TODO: Do logged in stuff.
@@ -41,9 +42,11 @@ class Homepage extends CI_Controller
         $user = $this->session->userdata('user');
 		$data['owner'] = ($user['id'] == $id);
 		$data['profile'] = $this->Profile_model->get_profile($id);
+		$data['id'] = $id;
 		$data['copyright'] = 'By Victor And Siemen';
 		$data['title'] = "Viewing profile";
 		$data['loggedin'] = ($this->session->userdata('loggedin') == true);
+		$data['user'] = $this->session->userdata('user');
 		// Do profile page form stuff, if we're the owner of the profile we are viewing.
 		if ($data['owner']) {
 			$this->load->helper('form');

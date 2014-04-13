@@ -17,7 +17,7 @@
         	// If we are logged in, do not show the login button, but a my profile button.
         	if(isset($loggedin)&&$loggedin) {
         		//echo ('<li><a href="'.base_url().'"index.php/myprofile/">My Profile</a></li>');
-        		echo "<li><a href='".base_url()."index.php/pages/view/myprofile'>My Profile</a></li>";
+        		echo "<li><a href='".base_url()."index.php/homepage/view/".$user['id']."'>My Profile</a></li>";
         	} else {
         		//echo ('<li><a href="'.base_url()'"index.php/login/">Login</a></li>');
         		echo "<li><a href='".base_url()."index.php/login'>Login</a></li>";

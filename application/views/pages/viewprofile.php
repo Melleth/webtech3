@@ -63,7 +63,8 @@
 			Description: <input type=\"text\" name=\"description\" value=\"" . $profile->description ."\" /><br />
 			Brands: " . $brands . "<br />
 			Email: <input type =\"text\" value=\"".$profile->email."\" name=\"email\" /> </br>
-			<input type=\"submit\" name=\"submit\" value=\"Update Profile\" />
+			<input type=\"submit\" name=\"submit\" value=\"Update Profile\" /> <br>
+			<a href=\"".base_url()."index.php/login/logout\">Logout</a>
 		</form>";
 
 	}
