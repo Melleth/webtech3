@@ -20,7 +20,7 @@ class Profile_model extends CI_Model
 		$query = $this->db->get();
 		$user = $query->row();
 		
-		$querybrands = $this->db->query("SELECT `name` FROM `brands` WHERE id IN (SELECT `brand_id` FROM `brand_likes` WHERE `id` = '" . $id . "');");		
+		$querybrands = $this->db->query("SELECT `name` FROM `brands` WHERE id IN (SELECT `brand_id` FROM `brand_likes` WHERE `user_id` = '" . $id . "');");		
 		$user->brands = $querybrands->result_array();
 		
 		return $user;

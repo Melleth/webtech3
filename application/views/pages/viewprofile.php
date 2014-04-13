@@ -22,13 +22,9 @@
 	if ($loggedin) {
 		// We are logged in, therefore we can view more stuff.
 		// Declerate some values.
-		$imgString = $profile->profile_pic;
-		if ($owner) {
-			// We are the owner of this profile we're viewing, fill accordingly.
-			$profiledata['imgLink'] = "<a href=\"" . base_url() . "index.php/Homepage/view/" . $profile->id . "\">" . $imgString . "</a>";
-		} else {
-			$profiledata['imgLink'] = "<a href=\"" . base_url() . "index.php/Homepage/view/" . $profile->id . "\">" . $imgString . "</a>";
-		}
+		$imgString = '<img class="homePageSilhouette" src="' . base_url() . 'uploads/'.$profile->profile_pic.'"></img>';
+		$profiledata['imgLink'] = '<a href="' . base_url() . 'uploads/' . $profile->profile_pic.'">' . $imgString . '</a>';
+		
 	} else {
 		// Do stuff for the anonymous user.
 		// Set profile image to anoymous user thumbnails

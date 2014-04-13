@@ -20,11 +20,9 @@ class Search extends CI_Controller
 		if($data['loggedin'])
         {
             // Set the preferred data so we can excecute a search
-            $profile_gender_preference = $this->session->userdata('user')['preferences'];
-            $profile_min_age_pref = $this->session->userdata('user')['preferredagelow'];
-            $profile_max_age_pref = $this->session->userdata('user')['preferredagehigh'];
+            $user = $this->session->userdata('user');
             //do a search with the profile data
-            $data['matches'] = $this->Search_model->search_matches($profile_gender_preference, $profile_min_age_pref, $profile_max_age_pref);
+            $data['matches'] = $this->Search_model->search_matches($user['preferences'], $user['preferredagelow'], $user['preferredagehigh']);
             $this->load->view('pages/searchresults', $data);
         }
         else //we are not logged in.
