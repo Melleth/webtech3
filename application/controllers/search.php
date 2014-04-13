@@ -19,11 +19,14 @@ class Search extends CI_Controller
         
 		if($data['loggedin'])
         {
+            $data['copyright'] = 'By Victor And Siemen';
             // Set the preferred data so we can excecute a search
             $user = $this->session->userdata('user');
             //do a search with the profile data
-            $data['matches'] = $this->Search_model->search_matches($user['preferences'], $user['preferredagelow'], $user['preferredagehigh']);
+            $data['matches'] = $this->Search_model->search_matches($user);
+            $this->load->view('templates/header.php');
             $this->load->view('pages/searchresults', $data);
+            $this->load->view('templates/footer.php');
         }
         else //we are not logged in.
         {

@@ -51,7 +51,7 @@ class Edit extends CI_Controller
             foreach($allbrands as $brnd)
             {
                 $box = $this->input->post('brandno' . $brnd['id']);
-                if($box['checked'] == "b")
+                if($box == "brands")
                 {
                     $this->Brands_model->like_brand($user['id'], $brnd['id']);
                 }
