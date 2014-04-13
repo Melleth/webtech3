@@ -1,0 +1,5 @@
+De css op de homepage is fucked up
+ctrl+f het hele project op "TODO" dan kom je langs genoeg te doen
+sommige stappen kunnen nog niet gezet worden omdat iets anders eerst geimplementeerd moet worden
+als je iets "unfinished" laat, laat dan even een TODO comment achter.
+succes bro!

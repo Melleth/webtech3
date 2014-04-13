@@ -1,0 +1,1 @@
+het sql bestand voor de database gaat er vanuit dat er al een (lege) database "date" bestaat
