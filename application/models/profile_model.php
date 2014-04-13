@@ -25,6 +25,11 @@ class Profile_model extends CI_Model
 		
 		return $user;
 	}
+    
+    public function set_profile_picture_path($id, $path)
+    {
+        $this->db->query("UPDATE profile SET profile_pic = '" . $path . "' WHERE id = '".$id."';");
+    }
 }
 
 ?>
