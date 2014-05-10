@@ -19,19 +19,46 @@ class Search_model extends CI_Model
 
         */
         //retrieve all user but yourself from the database.
-        $users = $this->db->query("SELECT * FROM profile WHERE id <>".$user['id']);
+        $users = $this->db->query("SELECT * FROM profile WHERE id <>".$user->id);
         $users = $users->result_array();
+        // Convert own personality to something we can work with
+        $splittedPersonality = preg_split('[-]', $user->personality);
+
         foreach ($users as $key => $value) {
         	$score = 0;
+        	echo "personality: ". $users[$key]['personality'];
         	$factors = preg_split('[-]', $users[$key]['personality']);
         	foreach ($factors as $key => $value) {
-        		echo $factors[$key];
+        		if ($factors[$key][0] != $splittedPersonality[$key][0]) {
+        			$factors[$key][0] = switch_types($splittedPersonality[$key], $factors[$key]);
+        			//
+        		}
         	}
         	
         }
-        
+
+        return $users;
         //$query = $this->db->query("");
 		//return $query->result_array();
+	}
+
+	private function switch_types($userType, $candidateType) {
+		if ($userType == "I" && $candidateType == "E")
+			return "I";
+		if ($userType == "E" && $candidateType == "I")
+			return "E";
+		if ($userType == "S" && $candidateType == "N")
+			return "S";
+		if ($userType == "N" && $candidateType == "S") 
+			return "N";
+		if ($userType == "T" && $candidateType == "F")
+			return "T";
+		if ($userType == "F" && $candidateType == "T")
+			return "F";
+		if ($userType == "J" && $candidateType == "P")
+			return "J";
+		if ($userType == "P" && $candidateType == "J")
+			return "P";
 	}
 }
 

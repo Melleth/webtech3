@@ -13,3 +13,4 @@
 	<input type="submit" name="submit" value="Find A Match!" />
 
 </form>
+<a href="<?php echo base_url()."index.php/login/register"; ?>">Register here!</a>

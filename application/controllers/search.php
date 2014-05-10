@@ -6,6 +6,7 @@ class Search extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model("Search_model");
+        $this->load->model("Profile_model");
 		$this->load->helper('url');
         $this->load->helper('form');
         $this->load->library('form_validation');
@@ -20,13 +21,23 @@ class Search extends CI_Controller
 		if($data['loggedin'])
         {
             $data['copyright'] = 'By Victor And Siemen';
-            // Set the preferred data so we can excecute a search
-            $user = $this->session->userdata('user');
-            //do a search with the profile data
-            $data['matches'] = $this->Search_model->search_matches($user);
-            $this->load->view('templates/header.php');
-            $this->load->view('pages/searchresults', $data);
-            $this->load->view('templates/footer.php');
+            // Set the profile data so we can excecute a search
+            // Make sure it is up to date by reloading it from the db (assuming the id is still the same as it shoudl never change).
+            $user = $this->Profile_model->get_profile($this->session->userdata('user')['id']);
+            // Check if a user has done a personality test
+            if (strlen($user->personality) > 2) {
+                //do a search with the profile data
+                $data['matches'] = $this->Search_model->search_matches($user);
+                
+                $this->load->view('templates/header.php');
+                $this->load->view('pages/searchresults', $data);
+                $this->load->view('templates/footer.php');    
+            } else {
+                // Redirect the user to the personality test.
+                $this->output->set_header('refresh:0;url='.base_url().'index.php/edit/personality');
+            }
+            
+            
         }
         else //we are not logged in.
         {

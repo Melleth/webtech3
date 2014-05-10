@@ -27,7 +27,7 @@
 		} else {
 			// Set the silhoutte if the user has not set a profile picture.
 			$imgString = "<img class=\"homepageSilhouette\" src=\"" . base_url() . "/includes/img/silhouetteMan.png\" alt=\"Silhouette\">";
-			if($profile->gender == 1)
+			if ($profile->gender == 1)
 				$imgString = "<img class=\"homepageSilhouette\" src=\"" . base_url() . "/includes/img/silhouetteWoman.png\" alt=\"Silhouette\">";
 		}
 		$profiledata['imgLink'] = '<a href="' . base_url() . 'uploads/' . $profile->profile_pic.'">' . $imgString . '</a>';
@@ -36,7 +36,7 @@
 		// Do stuff for the anonymous user.
 		// Set profile image to anoymous user thumbnails
 		$imgString = "<img class=\"homepageSilhouette\" src=\"" . base_url() . "/includes/img/silhouetteMan.png\" alt=\"Silhouette\">";
-		if($profile->gender == 1)
+		if ($profile->gender == 1)
 			$imgString = "<img class=\"homepageSilhouette\" src=\"" . base_url() . "/includes/img/silhouetteWoman.png\" alt=\"Silhouette\">";
 		$profiledata['imgLink'] = "<a href=\"" . base_url() . "index.php/Homepage/view/" . $profile->id . "\">" . $imgString . "</a>";
 	

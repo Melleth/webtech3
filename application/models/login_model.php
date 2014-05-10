@@ -16,7 +16,7 @@ class Login_model extends CI_Model
     
     public function insert_user($nickname, $name, $password, $email, $gender, $birthdate, $profile_pic, $description, $preferences, $pref_age_low, $pref_age_high)
     {
-        $this->db->query("INSERT INTO profile VALUES( null, '" . $nickname . "', '" . $name . "', '" . $password . "', '" . $email . "', '" . $gender . "', '" . $birthdate . "', '" . $profile_pic . "', '" . $description . "', '" . $preferences . "', '" . $pref_age_low . "', '" . $pref_age_high . "');");
+        $this->db->query("INSERT INTO profile VALUES( null, '" . $nickname . "', '" . $name . "', '" . $password . "', '" . $email . "', '" . $gender . "', '" . $birthdate . "', '" . $profile_pic . "', '" . $description . "', '" . $preferences . "', '" . $pref_age_low . "', '" . $pref_age_high . "', \"\", \"\");");
     }
 }
 

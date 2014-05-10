@@ -63,6 +63,8 @@ class Edit extends CI_Controller
     
     public function personality()
     {
+        $this->load->helper('form');
+        $this->load->library('form_validation');
     
         if(!$this->session->userdata('loggedin'))
         {

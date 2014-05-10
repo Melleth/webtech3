@@ -1,8 +1,9 @@
 <h2>Personality form(views/pages/personalityform.php)</h2>
 
-<?php echo validation_errors(); ?>
-
-<?php echo form_open('edit/personality'); ?>
+<?php
+    echo validation_errors(); 
+    echo form_open('edit/personality'); 
+?>
     
     <input type="radio" name="Q1" value="A">Ik geef de voorkeur aan grote groepen mensen, met een grote diversiteit.<br />
     <input type="radio" name="Q1" value="B">Ik geef de voorkeur aan intieme bijeenkomsten met uitsluitend goede vrienden.<br />
