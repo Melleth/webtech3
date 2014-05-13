@@ -20,17 +20,8 @@ class Homepage extends CI_Controller
 		$data['profiles'] = $this->Profile_model->get_profiles($num);
 		$data['copyright'] = 'By Victor And Siemen';
 		$data['title'] = "Home";
-		//$data['session'] = $this->session;
+        $data['loggedin'] = $this->session->userdata('loggedin');
 		$data['user'] = $this->session->userdata('user');
-		//Seperate cases for logged in users and lurkers.
-		if($this->session->userdata('loggedin')) {
-			//TODO: Do logged in stuff.
-			//Making mijn profiel.
-			$data['loggedin'] = $this->session->userdata('loggedin');
-
-		} else {
-			//TODO: Do lurker stuff.	
-		}
 		
 		$this->load->view('templates/header', $data);
 		$this->load->view('pages/home', $data);

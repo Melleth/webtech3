@@ -56,7 +56,7 @@ class Upload extends CI_Controller {
             $this->Profile_model->set_profile_picture_path($user['id'], $data['upload_data']['file_name']);
             $user['profile_pic'] = $data['upload_data']['file_name'];
             $this->session->set_userdata('user', $user);
-			//$this->output->set_header('refresh:0;url='.base_url().'index.php/Homepage/view/'.$user['id']);
+			$this->output->set_header('refresh:0;url='.base_url().'index.php/Homepage/view/'.$user['id']);
 		}
 	}
 }

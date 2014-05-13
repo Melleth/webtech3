@@ -1,12 +1,19 @@
 <?php
 	foreach($profiles as $profile)
 	{
-		$imgString = "<img class=\"homepageSilhouette\" src=\"" . base_url() . "/includes/img/silhouetteMan.png\" alt=\"Silhouette\">";
-		if($profile['gender'] == 1)
-			$imgString = "<img class=\"homepageSilhouette\" src=\"" . base_url() . "/includes/img/silhouetteWoman.png\" alt=\"Silhouette\">";
-		
-		$imgLink = "<a href=\"" . base_url() . "index.php/Homepage/view/" . $profile['id'] . "\">" . $imgString . "</a>";
-		
+    
+        if($loggedin && $profile['profile_pic'] != "")
+        {
+            $imgString = "<img class=\"homepageSilhouette\" src=\"" . base_url() . "/uploads/" . $profile['profile_pic'] . "\" alt=\"Silhouette\">";
+        }
+        else
+        {
+            $imgString = "<img class=\"homepageSilhouette\" src=\"" . base_url() . "/includes/img/silhouetteMan.png\" alt=\"Silhouette\">";
+            if($profile['gender'] == 1)
+                $imgString = "<img class=\"homepageSilhouette\" src=\"" . base_url() . "/includes/img/silhouetteWoman.png\" alt=\"Silhouette\">";
+        }    
+            $imgLink = "<a href=\"" . base_url() . "index.php/Homepage/view/" . $profile['id'] . "\">" . $imgString . "</a>";
+        
 		$c= date('Y-M-D');
 		$y= date('Y-M-D', strtotime($profile['birthdate']));
 		$age = $c-$y -1;
