@@ -12,20 +12,23 @@ class Homepage extends CI_Controller
 	
 	public function index()
 	{
-		$this->display(6); //default show 6
+        $data['copyright'] = 'By Victor And Siemen';
+		$data['title'] = "Home";
+		$this->load->view('templates/header', $data);
+		$this->load->view('pages/home', $data);
+		$this->load->view('templates/footer', $data);
 	}
 	
-	public function display($num)
+	public function display()
 	{
-		$data['profiles'] = $this->Profile_model->get_profiles($num);
+		$data['profiles'] = $this->Profile_model->get_profiles();
 		$data['copyright'] = 'By Victor And Siemen';
 		$data['title'] = "Home";
         $data['loggedin'] = $this->session->userdata('loggedin');
 		$data['user'] = $this->session->userdata('user');
 		
-		$this->load->view('templates/header', $data);
-		$this->load->view('pages/home', $data);
-		$this->load->view('templates/footer', $data);
+		$this->load->view('pages/ajaxhomepage', $data);
+
 	}
 	
 	public function view($id)

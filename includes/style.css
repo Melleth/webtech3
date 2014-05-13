@@ -36,6 +36,12 @@ div#menuBar ul li a {
 	color: white;
 }
 
+div#profileList
+{
+    width:600px;
+    float:left;
+}
+
 div.homepageProfileBlock
 {
 	background-color:#999999;
@@ -60,6 +66,7 @@ div#homepageRightPanel
 	width:200px;
 	height:300px;
 	float:right;
+    margin-top:30px;
 	text-align:left;
 	font-size:25px;
 	line-height:2em;
