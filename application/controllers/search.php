@@ -16,7 +16,7 @@ class Search extends CI_Controller
 	public function index()
 	{
         // Check for logged in status from the session.
-        $data['loggedin'] = ($this->session->userdata('loggedin') == true);
+        $data['loggedin'] = $this->session->userdata( 'loggedin' );
         
 		if($data['loggedin'])
         {
@@ -27,7 +27,13 @@ class Search extends CI_Controller
             // Check if a user has done a personality test
             if (strlen($user->personality) > 2) {
                 //do a search with the profile data
-                $data['matches'] = $this->Search_model->search_matches($user);
+                $gender = $user->preferences;
+                $minage = $user->preferredagelow;
+                $maxage = $user->preferredagehigh;
+                $personality = $user->personality_lookingfor;
+                $searchbrands = $user->brands;
+                
+                $data['matches'] = $this->Search_model->search_matches($gender, $minage, $maxage, $personality, $searchbrands);
                 
                 $this->load->view('templates/header.php');
                 $this->load->view('pages/searchresults', $data);
@@ -41,8 +47,34 @@ class Search extends CI_Controller
         }
         else //we are not logged in.
         {
-            //do a search with form data
-            $this->viewSearchForm();
+            //we have already collected the data
+            if($this->session->userdata('searchcomplete'))
+            {
+                $gender = $this->session->userdata('searchgender');
+                $minage = $this->session->userdata('searchminage');
+                $maxage = $this->session->userdata('searchmaxage');
+                $personality = $this->session->userdata('searchpersonality');
+                $searchbrands = $this->session->userdata('searchbrands');
+                
+                $data['matches'] = $this->Search_model->search_matches($gender, $minage, $maxage, $personality, $searchbrands);
+                
+                $this->session->unset_userdata('searchinprogress');
+                $this->session->unset_userdata('searchcomplete');
+                $this->session->unset_userdata('searchgender');
+                $this->session->unset_userdata('searchmaxage');
+                $this->session->unset_userdata('searchminage');
+                $this->session->unset_userdata('searchpersonality');
+                $this->session->unset_userdata('searchbrands');
+                
+                $this->load->view('templates/header.php');
+                $this->load->view('pages/searchresults', $data);
+                $this->load->view('templates/footer.php');    
+            }
+            else //we have not yet collected data
+            {
+                //do a search with form data
+                $this->viewSearchForm();
+            }
         }
 	}
 	
@@ -64,10 +96,12 @@ class Search extends CI_Controller
         else
         {
             //form succesfully validated
-            $data['matches'] = $this->Search_model->search_matches($this->input->post('gender'), $this->input->post('ageMin'), $this->input->post('ageMax'));
-            $this->load->view('templates/header', $data);
-            $this->load->view('pages/searchresults', $data);
-            $this->load->view('templates/footer', $data);
+            $this->session->set_userdata('searchinprogress', true);
+            $this->session->set_userdata('searchgender', $this->input->post('gender'));
+            $this->session->set_userdata('searchminage', $this->input->post('ageMin'));
+            $this->session->set_userdata('searchmaxage', $this->input->post('ageMax'));
+            //redirect to personality test
+            $this->output->set_header('refresh:0;url='.base_url().'index.php/edit/personality');
         }
 	}
 }

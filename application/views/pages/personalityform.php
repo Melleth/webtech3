@@ -100,7 +100,7 @@
     <input type="radio" name="Q19" value="C">Ik zit er eigenlijk tussenin.<br />
     <br />
     <br />
-    You can only do this personality test once!<br />
+    This is how I am!<br />
     <input type="checkbox" name="confirm">I am sure I answered correctly!
 	<input type="submit" name="submit" value="Submit!" />
 

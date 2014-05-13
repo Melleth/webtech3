@@ -7,22 +7,16 @@ class Search_model extends CI_Model
 		$this->load->database();
 	}
 	
-	public function search_matches($user) //TODO: MORE PREFERENCE REQUIREMENTS (SEE ASSIGNMENT)
+	public function search_matches($gender, $minage, $maxage, $personality, $brands)
 	{
-		//TODO: INSERT MATCHING QUERY HERE
-        /*
-        
-            Matching query staat heel uigebreid toegelicht in de opdracht. De implementatie daarvan gaat hier plaatsvinden.
-            Uiteindelijk moet deze functie een array met matches teruggeven. 
-            Nu zijn nog niet alle parameters aanwezig! Het persoonlijkheidstype ontbreekt en ook de merken zijn hier nog niet aanwezig.
-            Deze zullen uiteindelijk parameters worden van deze functie. 
-
-        */
+		/* 
+            Matching moet hier gebeuren. Alle gegevens zijn beschikbaar als parameters.
+        */ 
         //retrieve all user but yourself from the database.
-        $users = $this->db->query("SELECT * FROM profile WHERE id <>".$user->id);
-        $users = $users->result_array();
+        $query = $this->db->query("SELECT * FROM profile WHERE gender = " . $gender . ""); //TODO: verwerk gender en age hier (rekening houden met gender kan beide zijn)
+        $users = $query->result_array();
         // Convert own personality to something we can work with
-        $splittedPersonality = preg_split('[-]', $user->personality);
+        $splittedPersonality = preg_split('[-]', $personality);
 
         foreach ($users as $key => $value) {
         	$score = 0;
@@ -30,7 +24,7 @@ class Search_model extends CI_Model
         	$factors = preg_split('[-]', $users[$key]['personality']);
         	foreach ($factors as $key => $value) {
         		if ($factors[$key][0] != $splittedPersonality[$key][0]) {
-        			$factors[$key][0] = switch_types($splittedPersonality[$key], $factors[$key]);
+        			$factors[$key][0] = $this->switch_types($splittedPersonality[$key], $factors[$key]);
         			//
         		}
         	}

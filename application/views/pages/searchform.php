@@ -11,7 +11,7 @@
         <option value="2">Both</option>
     </select><br />
     
-    <label for="minAge">Age Between</label>
+    <label for="ageMin">Age Between</label>
     <input width="5" type="text" name="ageMin"></input> and <input width="5" type="text" name="ageMax"></input>
     <br />
     <br />

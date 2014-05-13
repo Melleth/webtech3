@@ -21,7 +21,7 @@ class Edit extends CI_Controller
     
     public function brands()
     {
-        if(!$this->session->userdata('loggedin'))
+        if(!$this->session->userdata('loggedin') && !$this->session->userdata('searchinprogress'))
         {
             echo "ERROR: You need to be logged in to view this page!";
             $this->output->set_header('refresh:5;url='.base_url().'index.php');
@@ -47,17 +47,37 @@ class Edit extends CI_Controller
         }
         else
         {
-            $this->Brands_model->remove_likes($user['id']); //first clear all the likes
-            //then add them from the new data
-            foreach($allbrands as $brnd)
+            if(!$this->session->userdata('searchinprogress')) //we are doing a brands edit for a member
             {
-                $box = $this->input->post('brandno' . $brnd['id']);
-                if($box == "brands")
+                $this->Brands_model->remove_likes($user['id']); //first clear all the likes
+                //then add them from the new data
+                foreach($allbrands as $brnd)
                 {
-                    $this->Brands_model->like_brand($user['id'], $brnd['id']);
+                    $box = $this->input->post('brandno' . $brnd['id']);
+                    if($box == "brands")
+                    {
+                        $this->Brands_model->like_brand($user['id'], $brnd['id']);
+                    }
                 }
+                $this->output->set_header('refresh:0;url='.base_url().'index.php/homepage/view/' . $user['id']);
             }
-            $this->output->set_header('refresh:0;url='.base_url().'index.php/homepage/view/' . $user['id']);
+            else //we are doing a brands like for non-members
+            {
+                $brandstring = "";
+                foreach($allbrands as $brnd)
+                {
+                    $box = $this->input->post('brandno' . $brnd['id']);
+                    if($box == "brands")
+                    {
+                        $brandstring .= $brnd['id'] . ",";
+                    }
+                }
+                //remove the last comma
+                $brandstring = substr($brandstring, 0, strlen($brandstring)-1); 
+                $this->session->set_userdata("searchbrands", $brandstring);
+                $this->session->set_userdata("searchcomplete", true);
+                $this->output->set_header('refresh:0;url='.base_url().'index.php/search');
+            }
         }
     }
     
@@ -66,7 +86,7 @@ class Edit extends CI_Controller
         $this->load->helper('form');
         $this->load->library('form_validation');
     
-        if(!$this->session->userdata('loggedin'))
+        if(!$this->session->userdata('loggedin') && !$this->session->userdata('searchinprogress'))
         {
             echo "you must be logged in!";
             echo "you will be redirected to the homepage";
@@ -78,7 +98,7 @@ class Edit extends CI_Controller
         $data['title'] = "Personality Test";
         $data['copyright'] = "By victor and siemen";
         
-        if($user['personality'] != "")
+        if($user['personality'] != "" && !$this->session->userdata('searchinprogress'))
         {
             echo "you are not allowed to do the personality test twice!<br />";
             echo "you will be redirected to your profile";
@@ -179,20 +199,30 @@ class Edit extends CI_Controller
             if($ei == $e) $resultstring .= "E" . $e; $partnerstring .= "I" . $e;
             if($ei == $i) $resultstring .= "I" . $i; $partnerstring .= "E" . $i;
             $resultstring .= "-";
+            $partnerstring .= "-";
             if($ns == $n) $resultstring .= "N" . $n; $partnerstring .= "S" . $n;
             if($ns == $s) $resultstring .= "S" . $s; $partnerstring .= "N" . $s;
             $resultstring .= "-";
+            $partnerstring .= "-";
             if($tf == $t) $resultstring .= "T" . $t; $partnerstring .= "F" . $t;
             if($tf == $f) $resultstring .= "F" . $f; $partnerstring .= "T" . $f;
             $resultstring .= "-";
+            $partnerstring .= "-";
             if($jp == $j) $resultstring .= "J" . $j; $partnerstring .= "P" . $j;
             if($jp == $p) $resultstring .= "P" . $p; $partnerstring .= "J" . $p;
             
             echo $resultstring;
             
-            $this->Profile_model->set_personality($user['id'], $resultstring, $partnerstring);
-            
-            $this->output->set_header('refresh:0;url='.base_url().'index.php/homepage/view/self');
+            if(!$this->session->userdata('searchinprogress')) //we are doing the test for a user
+            {
+                $this->Profile_model->set_personality($user['id'], $resultstring, $partnerstring);
+                $this->output->set_header('refresh:0;url='.base_url().'index.php/homepage/view/self');
+            }
+            else //we are doing the test for a non-member match-search 
+            {
+                $this->session->set_userdata('searchpersonality', $resultstring);
+                $this->output->set_header('refresh:0;url='.base_url().'index.php/edit/brands');
+            }
         }
         
     }
