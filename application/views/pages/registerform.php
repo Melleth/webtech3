@@ -12,8 +12,8 @@
     Email: <input type="text" name="email"></input><br />
     Gender: 
     <select name="gender">
-        <option value="0">Female</option>
-        <option value="1">Male</option>
+        <option value="1">Female</option>
+        <option value="0">Male</option>
     </select><br />
     Birthday (YYYY/MM/DD): <input type="date" name="birthday"></input><br />
     About me:<br />
