@@ -2,7 +2,6 @@
 <head>
 	<title><?php echo $title; ?> - DataDate</title>
 	<link rel="stylesheet" href="<?php echo base_url() ?>/includes/style.css" type="text/css" />
-	<script type='text/javascript' src="<?php echo base_url() ?>/includes/javascript/login-redirection.js"></script>
     <script type='text/javascript' src="<?php echo base_url() ?>/includes/javascript/jquery-1.11.1.min.js"></script>
 </head>
 <body>

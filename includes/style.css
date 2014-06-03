@@ -71,3 +71,24 @@ div#homepageRightPanel
 	font-size:25px;
 	line-height:2em;
 }
+
+table#inboxTable
+{
+    width:100%;
+}
+
+tr.inboxRowMod0
+{
+    background-color:#aabbaa;
+}
+
+tr.inboxRowMod1
+{
+    background-color:#aaddaa;
+}
+
+div.read_message_box
+{
+    background-color:#999999;
+    text-align:left;
+}
