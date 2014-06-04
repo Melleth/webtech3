@@ -22,6 +22,10 @@
                 echo "  <li><a href=\"" . base_url() . "index.php/messaging/\">Messaging</a></li>
                         <li><a href=\"" . base_url() . "index.php/likes/\">Likes</a></li>
                         <li><a href=\"" . base_url() . "index.php/login/logout/\">Logout</a></li>";
+                if(isSet($user) && $user['admin'] > 0)
+                {
+                    echo "<li><a href=\"" . base_url() . "index.php/admin/\">Administration</a></li>";
+                }
         	} else {
         		//echo ('<li><a href="'.base_url()'"index.php/login/">Login</a></li>');
         		echo "<li><a href='".base_url()."index.php/login'>Login</a></li>";
