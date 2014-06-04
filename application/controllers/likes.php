@@ -23,6 +23,7 @@ class Likes extends CI_Controller
         {
             echo "you need to be logged in to view this page.<br />You will be redirected soon.";
             $this->output->set_header('refresh:5;url='.base_url().'index.php/login');
+            return;
         }
     }
     
@@ -62,6 +63,8 @@ class Likes extends CI_Controller
         $data['copyright'] = 'by victor and siemen';
         $data['title'] = "Received Likes";
         $data['likes'] = $likes;
+        $data['loggedin'] = $this->session->userdata('loggedin');
+		$data['user'] = $this->session->userdata('user');
         $this->load->view('templates/header', $data);
         $this->load->view('pages/liking/receivedlikes', $data);
         $this->load->view('templates/footer', $data);
@@ -77,6 +80,8 @@ class Likes extends CI_Controller
         $data['copyright'] = 'by victor and siemen';
         $data['title'] = "Likes";
         $data['likes'] = $likes;
+        $data['loggedin'] = $this->session->userdata('loggedin');
+		$data['user'] = $this->session->userdata('user');
         $this->load->view('templates/header', $data);
         $this->load->view('pages/liking/givenlikes', $data);
         $this->load->view('templates/footer', $data);
@@ -92,6 +97,8 @@ class Likes extends CI_Controller
         $data['copyright'] = 'by victor and siemen';
         $data['title'] = "Likes";
         $data['likes'] = $likes;
+        $data['loggedin'] = $this->session->userdata('loggedin');
+		$data['user'] = $this->session->userdata('user');
         $this->load->view('templates/header', $data);
         $this->load->view('pages/liking/mutuallikes', $data);
         $this->load->view('templates/footer', $data);

@@ -14,6 +14,8 @@ class Homepage extends CI_Controller
 	{
         $data['copyright'] = 'By Victor And Siemen';
 		$data['title'] = "Home";
+        $data['loggedin'] = $this->session->userdata('loggedin');
+		$data['user'] = $this->session->userdata('user');
 		$this->load->view('templates/header', $data);
 		$this->load->view('pages/home', $data);
 		$this->load->view('templates/footer', $data);

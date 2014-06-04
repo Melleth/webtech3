@@ -22,43 +22,50 @@
 	if ($loggedin) {
 		// We are logged in, therefore we can view more stuff.
 		// Declerate some values.
+        
+        $likestring = "<a href=\"". base_url() . "index.php/likes/like/" . $profile->id . "\">Like</a> this user, and be able to message them!";
+        
 		if ($profile->profile_pic != "") {
-			$imgString = '<img class="homePageSilhouette" src="' . base_url() . 'uploads/'.$profile->profile_pic.'"></img>';
+			$imgString = '<img class="viewPageImg" src="' . base_url() . 'uploads/'.$profile->profile_pic.'"></img>';
 		} else {
 			// Set the silhoutte if the user has not set a profile picture.
-			$imgString = "<img class=\"homepageSilhouette\" src=\"" . base_url() . "/includes/img/silhouetteMan.png\" alt=\"Silhouette\">";
+			$imgString = "<img class=\"viewPageImg\" src=\"" . base_url() . "/includes/img/silhouetteMan.png\" alt=\"Silhouette\">";
 			if ($profile->gender == 1)
-				$imgString = "<img class=\"homepageSilhouette\" src=\"" . base_url() . "/includes/img/silhouetteWoman.png\" alt=\"Silhouette\">";
+				$imgString = "<img class=\"viewPageImg\" src=\"" . base_url() . "/includes/img/silhouetteWoman.png\" alt=\"Silhouette\">";
 		}
 		$profiledata['imgLink'] = '<a href="' . base_url() . 'uploads/' . $profile->profile_pic.'">' . $imgString . '</a>';
 		
 	} else {
+    
+        $likestring = "<a href=\"". base_url() . "index.php/login/register\">Create an account</a> to get in touch with this user!";
 		// Do stuff for the anonymous user.
 		// Set profile image to anoymous user thumbnails
-		$imgString = "<img class=\"homepageSilhouette\" src=\"" . base_url() . "/includes/img/silhouetteMan.png\" alt=\"Silhouette\">";
+		$imgString = "<img class=\"viewPageImg\" src=\"" . base_url() . "/includes/img/silhouetteMan.png\" alt=\"Silhouette\">";
 		if ($profile->gender == 1)
-			$imgString = "<img class=\"homepageSilhouette\" src=\"" . base_url() . "/includes/img/silhouetteWoman.png\" alt=\"Silhouette\">";
+			$imgString = "<img class=\"viewPageImg\" src=\"" . base_url() . "/includes/img/silhouetteWoman.png\" alt=\"Silhouette\">";
 		$profiledata['imgLink'] = "<a href=\"" . base_url() . "index.php/Homepage/view/" . $profile->id . "\">" . $imgString . "</a>";
 	
 	}
+    
+    
 	
-	// Create the image link from the string.
 	if (!$owner) {
-		echo "<div class=\"homepageProfileBlock\">
+		echo "<div class=\"viewProfileBlock\">
 		" . $profiledata['imgLink'] . "
 		<h3>" . $profile->name . "</h3><br />
 		Nickname: " . $profile->nickname . "<br />
 		Age: " . $age . "<br />
 		Description: " . $profile->description . "<br />
 		Brands: " . $brands . "<br />
-		
-		<i>MORE SHIT HERE (views/pages/viewprofile.php)</i>
+		Personality: " . $profile->personality . "<br />
+        Looking for ages between: " . $profile->preferredagelow . " and " . $profile->preferredagehigh . "<br />
+        " . $likestring . "
 
 		</div>";
 	} else {
 		// We are the owner, so we need to change all fields to input fields.
 		echo form_open('homepage/view/'. $profile->id);
-		echo "<div class=\"homepageProfileBlock\">
+		echo "<div class=\"viewProfileBlock\">
 			" . $profiledata["imgLink"] . " <a href=\"" . base_url() . "index.php/upload\">Upload new Picture</a> 
 			<a href=\"".base_url()."index.php/edit/brands\">Edit my brands</a><br>
 			Name: <input type=\"text\" name=\"name\" value=\"".$profile->name."\" /> <br>

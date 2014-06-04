@@ -26,11 +26,8 @@
 		Nickname: " . $profile['nickname'] . "<br />
 		Age: " . $age . "<br />
 		Description: " . $descr . "<br />
-		<i>MORE SHIT HERE (views/pages/ajaxhomepage.php)</i>
-		
-		
-		
-		
+        Personality: " . $profile['personality'] . "
+        
 		</div>";
 	}
 ?>

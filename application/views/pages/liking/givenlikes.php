@@ -1,3 +1,7 @@
+<a href="<?php echo base_url() ?>index.php/likes/received">Who likes me?</a><br />
+<a href="<?php echo base_url() ?>index.php/likes/given">Who have I liked?</a><br />
+<a href="<?php echo base_url() ?>index.php/likes/mutual">With whom do i have a mutual like?</a><br />
+
 <h1> people whom I liked! </h1>
 
 <?php

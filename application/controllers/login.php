@@ -34,6 +34,8 @@ class Login extends CI_Controller
     {
         $data['copyright'] = 'By Victor And Siemen';
 		$data['title'] = "Register";
+        $data['loggedin'] = $this->session->userdata('loggedin');
+		$data['user'] = $this->session->userdata('user');
         
         $this->form_validation->set_rules('nickname', 'Nickname', 'required');
         $this->form_validation->set_rules('realname', 'Name', 'required');

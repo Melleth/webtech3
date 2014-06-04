@@ -23,6 +23,7 @@ class Messaging extends CI_Controller
         {
             echo "you need to be logged in to view this page.<br />You will be redirected soon.";
             $this->output->set_header('refresh:5;url='.base_url().'index.php/login');
+            return;
             
         }
     }
@@ -36,6 +37,8 @@ class Messaging extends CI_Controller
         $data['copyright'] = 'by victor and siemen';
         $data['title'] = "Inbox";
         $data['messages'] = $msgs;
+        $data['loggedin'] = $this->session->userdata('loggedin');
+		$data['user'] = $this->session->userdata('user');
         $this->load->view('templates/header', $data);
         $this->load->view('pages/messaging/inbox', $data);
         $this->load->view('templates/footer', $data);
@@ -49,6 +52,8 @@ class Messaging extends CI_Controller
         $data['copyright'] = 'by victor and siemen';
         $data['title'] = "Read Message";
         $data['messages'] = $msgs;
+        $data['loggedin'] = $this->session->userdata('loggedin');
+		$data['user'] = $this->session->userdata('user');
         $this->load->view('templates/header', $data);
         $this->load->view('pages/messaging/view', $data);
         $this->load->view('templates/footer', $data);
@@ -69,6 +74,8 @@ class Messaging extends CI_Controller
         $this->checkLogin();
         $data['copyright'] = 'by victor and siemen';
         $data['title'] = "Compose Message";
+        $data['loggedin'] = $this->session->userdata('loggedin');
+		$data['user'] = $this->session->userdata('user');
         
         $this->form_validation->set_rules('submit', 'Send Button', 'required'); 
         $this->form_validation->set_rules('msg_subject', 'Message Subject', 'required');

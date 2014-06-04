@@ -34,6 +34,7 @@ class Search extends CI_Controller
                 $searchbrands = $user->brands;
                 
                 $data['matches'] = $this->Search_model->search_matches($gender, $minage, $maxage, $personality, $searchbrands);
+                $data['user'] = $this->session->userdata('user');
                 
                 $this->load->view('templates/header.php');
                 $this->load->view('pages/searchresults', $data);
@@ -57,6 +58,8 @@ class Search extends CI_Controller
                 $searchbrands = $this->session->userdata('searchbrands');
                 
                 $data['matches'] = $this->Search_model->search_matches($gender, $minage, $maxage, $personality, $searchbrands);
+                $data['loggedin'] = $this->session->userdata('loggedin');
+                $data['user'] = $this->session->userdata('user');
                 
                 $this->session->unset_userdata('searchinprogress');
                 $this->session->unset_userdata('searchcomplete');
@@ -82,7 +85,9 @@ class Search extends CI_Controller
 	{
 		$data['copyright'] = 'By Victor And Siemen';
 		$data['title'] = "Search for Match";
-		
+		$data['loggedin'] = $this->session->userdata('loggedin');
+		$data['user'] = $this->session->userdata('user');
+        
         $this->form_validation->set_rules('ageMin', 'Minimum Age', 'required|is_natural_no_zero|greater_than[18]');
         $this->form_validation->set_rules('ageMax', 'Maximum Age', 'required|is_natural_no_zero|less_than[99]');
 

@@ -13,11 +13,15 @@
 		<li><a href="<?php echo base_url() ?>index.php">Home</a></li>
 		<li><a href="<?php echo base_url() ?>index.php/pages/view/about">About</a></li>
         <li><a href="<?php echo base_url() ?>index.php/search/">Search People</a></li>
+        
         <?php
         	// If we are logged in, do not show the login button, but a my profile button.
         	if(isset($loggedin)&&$loggedin) {
         		//echo ('<li><a href="'.base_url().'"index.php/myprofile/">My Profile</a></li>');
         		echo "<li><a href='".base_url()."index.php/homepage/view/self'>My Profile</a></li>";
+                echo "  <li><a href=\"" . base_url() . "index.php/messaging/\">Messaging</a></li>
+                        <li><a href=\"" . base_url() . "index.php/likes/\">Likes</a></li>
+                        <li><a href=\"" . base_url() . "index.php/login/logout/\">Logout</a></li>";
         	} else {
         		//echo ('<li><a href="'.base_url()'"index.php/login/">Login</a></li>');
         		echo "<li><a href='".base_url()."index.php/login'>Login</a></li>";

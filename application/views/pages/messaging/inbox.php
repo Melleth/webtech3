@@ -1,3 +1,6 @@
+<a href="<?php echo base_url() ?>index.php/messaging/overview">Inbox</a> - 
+<a href="<?php echo base_url() ?>index.php/messaging/compose">Write Message</a><br />
+
 <h1>inbox (views/pages/messaging/inbox.php)</h1>
 
 <table id="inboxTable">

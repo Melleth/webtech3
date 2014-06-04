@@ -37,6 +37,8 @@ class Admin extends CI_Controller {
         $this->checkPrivilege();
         $data['copyright'] = 'by victor and siemen';
         $data['title'] = "Compose Message";
+        $data['loggedin'] = $this->session->userdata('loggedin');
+		$data['user'] = $this->session->userdata('user');
         
         $this->form_validation->set_rules('submit', 'Submit Button', 'required'); 
         $this->form_validation->set_rules('setting_alpha', 'Alpha', 'required|greater_than[0]|less_than[1]'); 

@@ -31,6 +31,8 @@ class Edit extends CI_Controller
         $data['title'] = "Edit Brands";
         $data['copyright'] = "By Victor and Siemen";
         $data['loggedin'] = true;
+        $data['loggedin'] = $this->session->userdata('loggedin');
+		$data['user'] = $this->session->userdata('user');
         
         $user = $this->session->userdata('user');
         
@@ -97,6 +99,8 @@ class Edit extends CI_Controller
         $user = $this->session->userdata('user');
         $data['title'] = "Personality Test";
         $data['copyright'] = "By victor and siemen";
+        $data['loggedin'] = $this->session->userdata('loggedin');
+		$data['user'] = $this->session->userdata('user');
         
         if($user['personality'] != "" && !$this->session->userdata('searchinprogress'))
         {

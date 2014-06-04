@@ -51,13 +51,35 @@ div.homepageProfileBlock
 	float:left;
 	margin-top:25px;
 	margin-left:50px;
+    text-align:left;
 }
+
+div.viewProfileBlock
+{
+	background-color:#999999;
+	width:900px;
+	height:470px;
+	overflow:none;
+	float:left;
+	margin-top:25px;
+	margin-left:50px;
+    text-align:left;
+}
+
 
 img.homepageSilhouette
 {
 	float:left;
 	width:170px;
 	height:200px;
+}
+
+img.viewPageImg
+{
+	float:left;
+	height:470px;
+    margin-right:25px;
+    width:400px;
 }
 
 div#homepageRightPanel
