@@ -21,8 +21,8 @@
     <br />
     Interested in: 
     <select name="genderpreference">
-        <option value="0">Women</option>
-        <option value="1">Men</option>
+        <option value="1">Women</option>
+        <option value="0">Men</option>
         <option value="2">Both</option>
     </select><br />
     Looking for ages between:
