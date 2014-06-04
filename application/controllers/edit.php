@@ -144,50 +144,50 @@ class Edit extends CI_Controller
             $p = 50;
             
             //E and I
-            if($this->input->post('Q1') == "A") $e+=10; $i-=10;
-            if($this->input->post('Q2') == "A") $e+=10; $i-=10;
-            if($this->input->post('Q3') == "A") $e+=10; $i-=10;
-            if($this->input->post('Q4') == "A") $e+=10; $i-=10;
-            if($this->input->post('Q5') == "A") $e+=10; $i-=10;
-            if($this->input->post('Q1') == "B") $i+=10; $e-=10;
-            if($this->input->post('Q2') == "B") $i+=10; $e-=10;
-            if($this->input->post('Q3') == "B") $i+=10; $e-=10;
-            if($this->input->post('Q4') == "B") $i+=10; $e-=10;
-            if($this->input->post('Q5') == "B") $i+=10; $e-=10;
+            if($this->input->post('Q1') == "A") { $e+=10; $i-=10; }
+            if($this->input->post('Q2') == "A") { $e+=10; $i-=10; }
+            if($this->input->post('Q3') == "A") { $e+=10; $i-=10; }
+            if($this->input->post('Q4') == "A") { $e+=10; $i-=10; }
+            if($this->input->post('Q5') == "A") { $e+=10; $i-=10; }
+            if($this->input->post('Q1') == "B") { $i+=10; $e-=10; }
+            if($this->input->post('Q2') == "B") { $i+=10; $e-=10; }
+            if($this->input->post('Q3') == "B") { $i+=10; $e-=10; }
+            if($this->input->post('Q4') == "B") { $i+=10; $e-=10; }
+            if($this->input->post('Q5') == "B") { $i+=10; $e-=10; }
             
             //N and S
-            if($this->input->post('Q6') == "A") $n+=12.5; $s-=12.5;
-            if($this->input->post('Q7') == "A") $n+=12.5; $s-=12.5;
-            if($this->input->post('Q8') == "A") $n+=12.5; $s-=12.5;
-            if($this->input->post('Q9') == "A") $n+=12.5; $s-=12.5;
-            if($this->input->post('Q6') == "B") $s+=12.5; $n-=12.5;
-            if($this->input->post('Q7') == "B") $s+=12.5; $n-=12.5;
-            if($this->input->post('Q8') == "B") $s+=12.5; $n-=12.5;
-            if($this->input->post('Q9') == "B") $s+=12.5; $n-=12.5;
+            if($this->input->post('Q6') == "A") { $n+=12.5; $s-=12.5; }
+            if($this->input->post('Q7') == "A") { $n+=12.5; $s-=12.5; }
+            if($this->input->post('Q8') == "A") { $n+=12.5; $s-=12.5; }
+            if($this->input->post('Q9') == "A") { $n+=12.5; $s-=12.5; }
+            if($this->input->post('Q6') == "B") { $s+=12.5; $n-=12.5; }
+            if($this->input->post('Q7') == "B") { $s+=12.5; $n-=12.5; }
+            if($this->input->post('Q8') == "B") { $s+=12.5; $n-=12.5; }
+            if($this->input->post('Q9') == "B") { $s+=12.5; $n-=12.5; }
             
             //T and F
-            if($this->input->post('Q10') == "A") $t+=12.5; $f-=12.5;
-            if($this->input->post('Q11') == "A") $t+=12.5; $f-=12.5;
-            if($this->input->post('Q12') == "A") $t+=12.5; $f-=12.5;
-            if($this->input->post('Q13') == "A") $t+=12.5; $f-=12.5;
-            if($this->input->post('Q10') == "B") $f+=12.5; $t-=12.5;
-            if($this->input->post('Q11') == "B") $f+=12.5; $t-=12.5;
-            if($this->input->post('Q12') == "B") $f+=12.5; $t-=12.5;
-            if($this->input->post('Q13') == "B") $f+=12.5; $t-=12.5;
+            if($this->input->post('Q10') == "A") { $t+=12.5; $f-=12.5; }
+            if($this->input->post('Q11') == "A") { $t+=12.5; $f-=12.5; }
+            if($this->input->post('Q12') == "A") { $t+=12.5; $f-=12.5; }
+            if($this->input->post('Q13') == "A") { $t+=12.5; $f-=12.5; }
+            if($this->input->post('Q10') == "B") { $f+=12.5; $t-=12.5; }
+            if($this->input->post('Q11') == "B") { $f+=12.5; $t-=12.5; }
+            if($this->input->post('Q12') == "B") { $f+=12.5; $t-=12.5; }
+            if($this->input->post('Q13') == "B") { $f+=12.5; $t-=12.5; }
             
             //J and P
-            if($this->input->post('Q14') == "A") $j+=8.333; $p-=8.333;
-            if($this->input->post('Q15') == "A") $j+=8.333; $p-=8.333;
-            if($this->input->post('Q16') == "A") $j+=8.333; $p-=8.333;
-            if($this->input->post('Q17') == "A") $j+=8.333; $p-=8.333;
-            if($this->input->post('Q18') == "A") $j+=8.333; $p-=8.333;
-            if($this->input->post('Q19') == "A") $j+=8.333; $p-=8.333;
-            if($this->input->post('Q14') == "B") $p+=8.333; $j-=8.333;
-            if($this->input->post('Q15') == "B") $p+=8.333; $j-=8.333;
-            if($this->input->post('Q16') == "B") $p+=8.333; $j-=8.333;
-            if($this->input->post('Q17') == "B") $p+=8.333; $j-=8.333;
-            if($this->input->post('Q18') == "B") $p+=8.333; $j-=8.333;
-            if($this->input->post('Q19') == "B") $p+=8.333; $j-=8.333;
+            if($this->input->post('Q14') == "A") { $j+=8.333; $p-=8.333; }
+            if($this->input->post('Q15') == "A") { $j+=8.333; $p-=8.333; }
+            if($this->input->post('Q16') == "A") { $j+=8.333; $p-=8.333; }
+            if($this->input->post('Q17') == "A") { $j+=8.333; $p-=8.333; }
+            if($this->input->post('Q18') == "A") { $j+=8.333; $p-=8.333; }
+            if($this->input->post('Q19') == "A") { $j+=8.333; $p-=8.333; }
+            if($this->input->post('Q14') == "B") { $p+=8.333; $j-=8.333; }
+            if($this->input->post('Q15') == "B") { $p+=8.333; $j-=8.333; }
+            if($this->input->post('Q16') == "B") { $p+=8.333; $j-=8.333; }
+            if($this->input->post('Q17') == "B") { $p+=8.333; $j-=8.333; }
+            if($this->input->post('Q18') == "B") { $p+=8.333; $j-=8.333; }
+            if($this->input->post('Q19') == "B") { $p+=8.333; $j-=8.333; }
             
             $ei = max($e, $i);
             $ns = max($n, $s);
@@ -196,22 +196,63 @@ class Edit extends CI_Controller
             
             $resultstring = "";
             $partnerstring = "";
-            if($ei == $e) $resultstring .= "E" . $e; $partnerstring .= "I" . $e;
-            if($ei == $i) $resultstring .= "I" . $i; $partnerstring .= "E" . $i;
+            if($ei == $e && $e!=$i) {
+                $resultstring .= "E" . $e;
+                $partnerstring .= "I" . $e;
+            }
+            if($ei == $i && $e!=$i) {
+                $resultstring .= "I" . $i;
+                $partnerstring .= "E" . $i;
+            }
+            if ($e == $i) {
+                $resultstring .= "E" . $e;
+                $partnerstring .= "I" . $i;
+            }
             $resultstring .= "-";
             $partnerstring .= "-";
-            if($ns == $n) $resultstring .= "N" . $n; $partnerstring .= "S" . $n;
-            if($ns == $s) $resultstring .= "S" . $s; $partnerstring .= "N" . $s;
+            if($ns == $n && $n != $s) {
+                $resultstring .= "N" . $n; 
+                $partnerstring .= "S" . $n;
+            }
+            if($ns == $s && $n != $s) {
+                $resultstring .= "S" . $s; 
+                $partnerstring .= "N" . $s;
+            }
+            if ($s == $n) {
+                $resultstring .= "N" . $n; 
+                $partnerstring .= "S" . $n;
+            }
             $resultstring .= "-";
             $partnerstring .= "-";
-            if($tf == $t) $resultstring .= "T" . $t; $partnerstring .= "F" . $t;
-            if($tf == $f) $resultstring .= "F" . $f; $partnerstring .= "T" . $f;
+            if($tf == $t && $t != $f) {
+                $resultstring .= "T" . $t; 
+                $partnerstring .= "F" . $t;
+            }
+            if($tf == $f && $t != $f) {
+                $resultstring .= "F" . $f; 
+                $partnerstring .= "T" . $f;
+            }
+            if ($t == $f) {
+                $resultstring .= "F" . $f; 
+                $partnerstring .= "T" . $f;
+            }
             $resultstring .= "-";
             $partnerstring .= "-";
-            if($jp == $j) $resultstring .= "J" . $j; $partnerstring .= "P" . $j;
-            if($jp == $p) $resultstring .= "P" . $p; $partnerstring .= "J" . $p;
+            if($jp == $j && $j != $p) {
+                $resultstring .= "J" . $j;
+                $partnerstring .= "P" . $j;
+            }
+            if($jp == $p && $j != $p) {
+                $resultstring .= "P" . $p; 
+                $partnerstring .= "J" . $p;
+            }
+            if ($j == $p) {
+                $resultstring .= "J" . $j;
+                $partnerstring .= "P" . $j;
+            }
             
-            echo $resultstring;
+            echo 'result: '. $resultstring.'<br>';
+            echo 'partner: '. $partnerstring;
             
             if(!$this->session->userdata('searchinprogress')) //we are doing the test for a user
             {

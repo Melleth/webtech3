@@ -3,6 +3,6 @@
 	//TODO: IMPLEMENt
 	foreach($matches as $match) {
 		//display the matches
-		echo $match['name'] . "<br>";
+		echo $match['name'] . ' '. $match['gender']. "<br>";
 	}
 ?>

@@ -12,24 +12,32 @@ class Search_model extends CI_Model
 		/* 
             Matching moet hier gebeuren. Alle gegevens zijn beschikbaar als parameters.
         */ 
-        //retrieve all user but yourself from the database.
-        $query = $this->db->query("SELECT * FROM profile WHERE gender = " . $gender . ""); //TODO: verwerk gender en age hier (rekening houden met gender kan beide zijn)
-        $users = $query->result_array();
-        // Convert own personality to something we can work with
-        $splittedPersonality = preg_split('[-]', $personality);
-
-        foreach ($users as $key => $value) {
-        	$score = 0;
-        	echo "personality: ". $users[$key]['personality'];
-        	$factors = preg_split('[-]', $users[$key]['personality']);
-        	foreach ($factors as $key => $value) {
-        		if ($factors[$key][0] != $splittedPersonality[$key][0]) {
-        			$factors[$key][0] = $this->switch_types($splittedPersonality[$key], $factors[$key]);
-        			//
-        		}
-        	}
-        	
+        // We need to query the database for a set of profiles that match the clients prefferences
+        // First we check for gender prefference.
+        if ($gender == 2) {
+        	// If the client is a bisexual we need to modify the query a bit
+        	$gender = "0 OR gender = 1";
         }
+        // If the client is just interested in 1 gender, we can leave it be.
+        $query = $this->db->query("SELECT * FROM profile WHERE gender = " . $gender . ""); //TODO: verwerk gender en age hier (rekening houden met gender kan beide zijn)
+        foreach($query->result() as $row) {
+        	foreach ($row as $result) {
+        		echo $result.'<br>';
+        	}
+        }
+        $users = $query->result_array();
+        // Create datastructure for our own personality
+        $splittedPersonality = preg_split("/-/", $personality);
+        $personalityData = [];
+        foreach ($splittedPersonality as $key => $value) {
+        	$dichotomy = $value[0];
+        	$score = substr($value, 1, strlen($value)-1);
+        	$personalityData[$dichotomy] = $score;
+        }
+        print_r($personalityData);
+        echo '<br>'.$minage;
+        echo '<br>'.$maxage;
+        
 
         return $users;
         //$query = $this->db->query("");
