@@ -31,6 +31,7 @@ class Search extends CI_Controller
                 $minage = $user->preferredagelow;
                 $maxage = $user->preferredagehigh;
                 $personality = $user->personality_lookingfor;
+                //$personality = $user->personality;
                 $searchbrands = $user->brands;
                 
                 $data['matches'] = $this->Search_model->search_matches($gender, $minage, $maxage, $personality, $searchbrands);

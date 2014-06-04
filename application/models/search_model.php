@@ -56,18 +56,21 @@ class Search_model extends CI_Model
 	        	$userTypes = array_keys($personalityData);
 	        	$candidateTypes = array_keys($psData);
 				$numerator = 0;
+				//print_r($psData);
 				for ($i = 0; $i<4; $i++) {
 					if ($userTypes[$i] == $candidateTypes[$i]) {
 						// No conversion needed.
-						echo "numerator: ". $numerator;
-						$numerator += ($personalityData[$i] - $psData[$i]);
+						$numerator += ($personalityData[$userTypes[$i]] - $psData[$candidateTypes[$i]]);
 					} else {
 						// Conversion needed.
-						echo "numerator: ". $numerator;
-						$numerator += $personalityData[$i] - (100 - $psData[$i]);
+						$convertedKey = $this->switch_types($candidateTypes[$i],$userTypes[$i]);
+						echo "userkey: ".$userTypes[$i]." candidatekey: ".$candidateTypes[$i]."<br>";
+						echo "converted key:  " . $convertedKey;
+						$numerator += $personalityData[$userTypes[$i]] - (100 - $psData[$convertedKey]);
 					}
 				}
-				echo "personality normalisation result: ".$numerator/"400"."<br>";
+				// Devide by 400 to get the normalized score.
+				$personalityScore = $numerator/"400";
 			}
         }
 
@@ -106,7 +109,7 @@ class Search_model extends CI_Model
         return (count($intersect) / min(count($itemset1), count($itemset2)));
     }
 
-	private function switch_types($userType, $candidateType) {
+	public function switch_types($userType, $candidateType) {
 		if ($userType == "I" && $candidateType == "E")
 			return "I";
 		if ($userType == "E" && $candidateType == "I")
