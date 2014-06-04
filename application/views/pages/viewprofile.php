@@ -1,3 +1,16 @@
+<script language="javascript">
+
+function getDeleteConfirm()
+{
+    var r = confirm("are you sure you want to delete your account? :(");
+    if(r)
+    {
+        window.location = "<?php echo base_url() ?>index.php/login/deregister"; 
+    }
+}
+
+</script>
+
 <?php
 	//Age calculation
 	$c= date('Y-M-D');
@@ -76,6 +89,7 @@
 			Email: <input type =\"text\" value=\"".$profile->email."\" name=\"email\" /> </br>
 			<input type=\"submit\" name=\"submit\" value=\"Update Profile\" /> <br>
 			<a href=\"".base_url()."index.php/login/logout\">Logout</a>
+            <a href=\"#\" onClick=\"getDeleteConfirm()\">Delete Account</a>
 		</form>";
 
 	}

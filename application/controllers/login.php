@@ -115,6 +115,20 @@ class Login extends CI_Controller
         }
 	}
     
+    public function deregister()
+    {
+        if(!$this->session->userdata('loggedin'))
+        {
+            echo "You need to be logged in to deregister";
+            return;
+        }
+        $user = $this->session->userdata('user');
+        $this->Login_model->deregister($user['id']);
+        $this->session->unset_userdata('loggedin');
+        $this->session->unset_userdata('user');
+        $this->output->set_header('refresh:0;url='.base_url().'index.php');
+    }
+    
     public function logout()
     {
         $this->session->unset_userdata('loggedin');
