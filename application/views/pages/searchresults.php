@@ -1,8 +1,8 @@
 <?php
 	//$matches contains the found matches
 	//TODO: IMPLEMENt
-	foreach($matches as $key => $match) {
+	foreach($matches as $match) {
 		//display the matches
-		echo $matches[$key]['name'] . "<br>";
+		echo $match['name'] . "<br>";
 	}
 ?>

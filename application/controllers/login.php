@@ -14,7 +14,7 @@ class Login extends CI_Controller
     
 	public function index()
 	{
-		if($this->session->userdata('loggedin')) //TODO: is user logged in? --> redirecting them to homepage!
+		if($this->session->userdata('loggedin'))
         {
             $data['Title'] = "Logged in!";
             $data['copyright'] = "By Victor and Siemen";

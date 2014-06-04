@@ -33,17 +33,19 @@ class Messaging_model extends CI_Model
 		return $query->result_array();
     }
     
-    public function getPossibleDestinations($userid)
+    public function getPossibleDestinations($id)
     {
-        //returns the list of all the people user x can send messages to;
-        //user x can message user y IFF (x likes y && y likes x)
-        //shouldn't be too hard, can be done in one clever sql query.
-        
-        //PLACEHOLDER QUERY UNTILL LIKES SYSTEM IS BUILT (TODO!!)
-        $query = $this->db->query(" SELECT id, name 
-                                    FROM profile
-                                    WHERE id != '" . $userid . "';");
-		return $query->result_array();
+        $query = $this->db->query(" SELECT *
+                                    FROM profile p
+                                    WHERE p.id IN (
+                                        SELECT likes
+                                        FROM likes l
+                                        WHERE liker = '" . $id . "')
+                                    AND p.id IN (
+                                        SELECT liker
+                                        FROM likes
+                                        WHERE likes = '" . $id . "')");
+        return $query->result_array();
     }
     
     public function insertMessage($fromid, $toid, $subject, $body)
