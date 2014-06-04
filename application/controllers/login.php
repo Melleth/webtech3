@@ -51,7 +51,16 @@ class Login extends CI_Controller
         else
         {
             //form succesfully validated
-            $this->Login_model->insert_user($this->input->post('nickname'), $this->input->post('realname'), $this->input->post('password'), $this->input->post('email'), $this->input->post('gender'), $this->input->post('birthday'), "", $this->input->post('description'), $this->input->post('genderpreference'), $this->input->post('ageMin'), $this->input->post('ageMax'));
+            $this->Login_model->insert_user($this->input->post('nickname', TRUE),
+                                            $this->input->post('realname', TRUE),
+                                            $this->input->post('password', TRUE),
+                                            $this->input->post('email', TRUE),
+                                            $this->input->post('gender', TRUE),
+                                            $this->input->post('birthday', TRUE),
+                                            "", $this->input->post('description', TRUE),
+                                            $this->input->post('genderpreference', TRUE),
+                                            $this->input->post('ageMin', TRUE),
+                                            $this->input->post('ageMax', TRUE));
             $this->session->unset_userdata('loggedin');
             $this->session->unset_userdata('user');
             $this->output->set_header('refresh:0;url='.base_url().'index.php/login');
