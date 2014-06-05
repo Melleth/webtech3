@@ -265,7 +265,7 @@ class Edit extends CI_Controller
             }
             else //we are doing the test for a non-member match-search 
             {
-                $this->session->set_userdata('searchpersonality', $resultstring);
+                $this->session->set_userdata('searchpersonality', $partnerstring);
                 $this->output->set_header('refresh:0;url='.base_url().'index.php/edit/brands');
             }
         }
