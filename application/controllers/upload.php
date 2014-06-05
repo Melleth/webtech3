@@ -59,4 +59,15 @@ class Upload extends CI_Controller {
 			$this->output->set_header('refresh:0;url='.base_url().'index.php/Homepage/view/'.$user['id']);
 		}
 	}
+    
+    public function removeProfilePic()
+    {
+        $data['title'] = "Profile Picture";
+        $data['copyright'] = "By Victor and Siemen";
+        $data['loggedin'] = true;
+        $data['user'] = $this->session->userdata('user');
+        $user = $this->session->userdata('user');
+        $this->Profile_model->set_profile_picture_path($user['id'], '');
+        $this->output->set_header('refresh:0;url='.base_url().'index.php/Homepage/view/self');
+    }
 }
