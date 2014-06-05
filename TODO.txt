@@ -12,7 +12,7 @@ x invullen van brands verplicht maken (zie hierboven)
 * profiel edit pagina kan nog niet alle vereiste velden editen
 * meer dan 6 matching resultaten afhandelen met volgende/vorige knoppen
 * foto geheel verwijderen (nu kan alleen aanpassen)
-* op profieloverzichtjes (dus ook op homepage) moet het duidelijk zijn of/dat je iemand hebt geliked
+x op profieloverzichtjes (dus ook op homepage) moet het duidelijk zijn of/dat je iemand hebt geliked
 
 * HTML5 check wc3
 * CSS3 check

@@ -1,7 +1,15 @@
 <?php
 	foreach($profiles as $profile)
 	{
-    
+    	$likeString = "";
+    	if ($loggedin) {
+    		if ($profile["liked"]) {
+            	$likeString = "You like this person.";
+            }
+            if ($profile["mutualLike"]) {
+            	$likeString = "You both like eachother!";
+            }
+    	}
         if($loggedin && $profile['profile_pic'] != "")
         {
             $imgString = "<img class=\"homepageSilhouette\" src=\"" . base_url() . "/uploads/" . $profile['profile_pic'] . "\" alt=\"Silhouette\">";
@@ -27,6 +35,7 @@
 		Age: " . $age . "<br />
 		Description: " . $descr . "<br />
         Personality: " . $profile['personality'] . "
+        <br />".$likeString."
         
 		</div>";
 	}

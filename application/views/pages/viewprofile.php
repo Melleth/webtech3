@@ -35,8 +35,15 @@ function getDeleteConfirm()
 	if ($loggedin) {
 		// We are logged in, therefore we can view more stuff.
 		// Declerate some values.
+
+		$emailString = "hidden";
 		if ($liked) {
 			$likestring = "You liked this profile!";
+			if ($mutualLike) {
+				$personalPronoun = ($profile->gender == 0 ? "him" : "her");
+				$likestring = "You like eachother! Send ". $personalPronoun . " a message <a href=\"".base_url()."index.php/messaging/compose\">here</a>!";
+				$emailString = $profile->email;
+			}
 		} else {
 			$likestring = "<a href=\"". base_url() . "index.php/likes/like/" . $profile->id . "\">Like</a> this user, and be able to message them!";	
 		}
@@ -73,6 +80,7 @@ function getDeleteConfirm()
 		Age: " . $age . "<br />
 		Description: " . $profile->description . "<br />
 		Brands: " . $brands . "<br />
+		email: ". $emailString ."<br />
 		Personality: " . $profile->personality . "<br />
         Looking for ages between: " . $profile->preferredagelow . " and " . $profile->preferredagehigh . "<br />
         " . $likestring . "

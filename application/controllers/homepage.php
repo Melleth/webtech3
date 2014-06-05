@@ -24,7 +24,16 @@ class Homepage extends CI_Controller
 	
 	public function display()
 	{
-		$data['profiles'] = $this->Profile_model->get_profiles();
+		$user = $this->session->userdata('user');
+		$profiles = $this->Profile_model->get_profiles();
+		$data["profiles"] = [];
+		foreach ($profiles as $profile) {
+			// Set the data
+			$profile["liked"] = $this->Likes_model->userLikesUser($user["id"], $profile["id"]);
+			$profile["mutualLike"] = ($this->Likes_model->userLikesUser($user["id"], $profile["id"]) && $this->Likes_model->userLikesUser($profile["id"], $user["id"]));
+			// Put the adjusted profile in the data
+			array_push($data["profiles"], $profile);
+		}
 		$data['copyright'] = 'By Victor And Siemen';
 		$data['title'] = "Home";
         $data['loggedin'] = $this->session->userdata('loggedin');
@@ -51,6 +60,7 @@ class Homepage extends CI_Controller
 		$data['loggedin'] = ($this->session->userdata('loggedin') == true);
 		$data['user'] = $this->session->userdata('user');
 		$data['liked'] = $this->Likes_model->userLikesUser($user["id"], $data["id"]);
+		$data["mutualLike"] = ($this->Likes_model->userLikesUser($user["id"], $data["id"]) && $this->Likes_model->userLikesUser($data["id"], $user["id"]));
 		// Do profile page form stuff, if we're the owner of the profile we are viewing.
 		if ($data['owner']) {
 			$this->load->helper('form');
