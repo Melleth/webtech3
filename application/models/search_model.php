@@ -5,34 +5,31 @@ class Search_model extends CI_Model
 	public function __construct()
 	{
 		$this->load->database();
+		$this->config->load('administration');
 	}
 	
-	public function search_matches($gender, $minage, $maxage, $personality, $brands)
+	public function search_matches($genderPreference, $minage, $maxage, $personality, $brands, $me)
 	{
 		/* 
             Matching moet hier gebeuren. Alle gegevens zijn beschikbaar als parameters.
         */ 
         // We need to query the database for a set of profiles that match the clients prefferences
         // First we check for gender prefference.
-        if ($gender == 2) {
+        if ($genderPreference == 2) {
         	// If the client is a bisexual we need to modify the query a bit
-        	$gender = "0 OR gender = 1";
+        	$genderPreference = "0 OR gender = 1";
         }
         // If the client is just interested in 1 gender, we can leave it be.
-        $query = $this->db->query("SELECT * FROM profile WHERE gender = " . $gender . ""); //TODO: verwerk gender en age hier (rekening houden met gender kan beide zijn)
-        // Remove incompatible birthdates.
-        $validAges = [];
+        $query = $this->db->query("SELECT * FROM profile WHERE gender = " . $genderPreference . ""); //TODO: verwerk gender en age hier (rekening houden met gender kan beide zijn)
+        // Put all the potential matches (age and genderPreference included in a new array matches[])
+        $matches = [];
         foreach($query->result_array() as $row) {
-        	
-			$c= date('Y-M-D');
-			$y= date('Y-M-D', strtotime($row['birthdate']));
-			$row['age'] = $c-$y -1;
-			if ($row['age'] >= $minage && $row['age']<=$maxage) {
-				$row["score"] = 0;
-				array_push($validAges, $row);
-			}
+        	if ($this->isInterestedInMe($me, $row) && $this->isInterestedInMe($row, $me)) {
+        		array_push($matches, $row);
+        	}
         }
         //$users = $query->result_array();
+        /* OLD STUFF THAT WORKED!!! backup
         // Create datastructure for our own personality
         $splittedPersonality = preg_split("/-/", $personality);
         $personalityData = [];
@@ -72,18 +69,80 @@ class Search_model extends CI_Model
 				// Devide by 400 to get the normalized score.
 				$personalityScore = $numerator/"400";
 			}
+        }*/
+        foreach ($matches as $match) {
+        	$personalityDistance = 1-$this->personalityNormalisation($personality, $match["personality"]);
+        	$reversePersonalityDistance = 1-$this->personalityNormalisation($match["personality"], $personality);
+        	$maxPersonalityDistance = max($personalityDistance, $reversePersonalityDistance);
+        	$querybrands = $this->db->query("SELECT `name` FROM `brands` WHERE id IN (SELECT `brand_id` FROM `brand_likes` WHERE `user_id` = '" . $match["id"] . "');");	
+        	$matchBrands = $querybrands->result_array();
+        	$match["finalScore"] = $this->config->item('x-factor') * $maxPersonalityDistance + (1 - $this->config->item('x-factor')) * $this->brandScore($brands, $matchBrands);
         }
-
-        print_r($validAges);
-        print_r($personalityData);
-        echo '<br>'.$minage;
-        echo '<br>'.$maxage;
-        
-
-        return $validAges;
-        //$query = $this->db->query("");
-		//return $query->result_array();
+        $sortedMatches = usort($matches, "sortFunction");
+        print_r($matches);
+        return $sortedMatches;
 	}
+
+	
+
+	public function personalityNormalisation($myPersonality, $otherPersonality) {
+		$myPersonality = $this->stringToPersonalityArray($myPersonality);
+		$otherPersonality = $this->stringToPersonalityArray($otherPersonality);
+
+		$personalityScore  = 0;
+    	$userTypes = array_keys($myPersonality);
+    	$candidateTypes = array_keys($otherPersonality);
+		$numerator = 0;
+		//print_r($psData);
+		for ($i = 0; $i<4; $i++) {
+			if ($userTypes[$i] == $candidateTypes[$i]) {
+				// No conversion needed.
+				$numerator += ($myPersonality[$userTypes[$i]] - $otherPersonality[$candidateTypes[$i]]);
+			} else {
+				// Conversion needed.
+				$convertedKey = $this->switch_types($candidateTypes[$i],$userTypes[$i]);
+				echo "userkey: ".$userTypes[$i]." candidatekey: ".$candidateTypes[$i]."<br>";
+				echo "converted key:  " . $convertedKey;
+				$numerator += $personalityData[$userTypes[$i]] - (100 - $psData[$convertedKey]);
+			}
+		}
+		// Devide by 400 to get the normalized score.
+		return $numerator/"400";
+
+	}
+
+	public function isInterestedInMe($me, $other)
+	{
+		// Cast both parameters to an array as always one of the two is an object.
+		$me = (array)$me;
+		$other = (array)$other;
+        $c= date('Y-M-D');
+        $y= date('Y-M-D', strtotime($me["birthdate"]));
+	  	$me["age"] = $c-$y -1;
+        if($me["age"] > $other['preferredagehigh'] || $me["age"] < $other['preferredagelow'])
+            return FALSE;
+        if($other['preferences'] != 2 && ($other['preferences'] != $me["gender"]))
+            return FALSE;
+        
+        return TRUE;
+    }
+
+    public function stringToPersonalityArray($string) {
+    	$splittedPersonality = preg_split("/-/", $string);
+        $personalityData = [];
+        foreach ($splittedPersonality as $key => $value) {
+        	$dichotomy = $value[0];
+        	$score = substr($value, 1, strlen($value)-1);
+        	$personalityData[$dichotomy] = $score;
+        }
+        return $personalityData;
+    }
+
+    public function getAge($birthdate) {
+    	$c= date('Y-M-D');
+        $y= date('Y-M-D', strtotime($me['birthdate']));
+	  	return ($c-$y -1);
+    }
 
 	public function DicesCoefficient($itemset1, $itemset2)
     {
@@ -94,7 +153,7 @@ class Search_model extends CI_Model
     public function JaccardsCoefficient($itemset1, $itemset2)
     {
         $intersect = array_intersect($itemset1, $itemset2);
-        return (count($intersect) / (count($itemset + $itemset2))); //the + on arrays should be the union, backup check required
+        return (count($intersect) / (count($itemset1 + $itemset2))); //the + on arrays should be the union, backup check required
     }
     
     public function CosineCoefficient($itemset1, $itemset2)
@@ -127,6 +186,32 @@ class Search_model extends CI_Model
 		if ($userType == "P" && $candidateType == "J")
 			return "P";
 	}
+
+	public function brandScore($set1, $set2)
+    {
+        switch($this->config->item('sim_measure'))
+        {
+            case"Dice":
+                return $this->DicesCoefficient($set1, $set2);
+            break;
+            case"Jaccard":
+                return $this->JaccardsCoefficient($set1, $set2);
+            break;
+            case"Cosine":
+                return $this->CosineCoefficient($set1, $set2);
+            break;
+            case"Overlap":
+                return $this->OverlapCoefficient($set1, $set2);
+            break;
+            
+        }
+    }
 }
+ function sortFunction($a, $b) {
+	if ($a["finalScore"] == $b["finalScore"]) {
+		return 0;
+	}
+	return ($a["finalScore"] < $b["finalScore"]) ? -1 : 1;
+}	
 
 ?>

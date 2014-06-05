@@ -34,7 +34,7 @@ class Search extends CI_Controller
                 //$personality = $user->personality;
                 $searchbrands = $user->brands;
                 
-                $data['matches'] = $this->Search_model->search_matches($gender, $minage, $maxage, $personality, $searchbrands);
+                $data['matches'] = $this->Search_model->search_matches($gender, $minage, $maxage, $personality, $searchbrands, $user);
                 $data['user'] = $this->session->userdata('user');
                 
                 $this->load->view('templates/header.php');
