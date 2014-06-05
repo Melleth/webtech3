@@ -64,6 +64,12 @@ class Likes_model extends CI_Model
                                         WHERE likes = '" . $id . "')");
         return $query->result_array();
     }
+
+    public function updatePersonality($id, $me) {
+        $query = $this->db->query("SELECT * FROM profile p WHERE p.id =".$id."");
+        $other = query->result_array();
+        print_r($other);
+    }
 }
 
 ?>

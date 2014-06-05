@@ -40,7 +40,7 @@ class Likes extends CI_Controller
             return;
         }
         
-        //TODO: personality learning logic here
+        $this->Likes_model->updatePersonality($id, $user);
         
         $this->Likes_model->insertLike($user['id'], $id);
         $this->output->set_header('refresh:0;url='.base_url().'index.php/Homepage/view/' . $id);
