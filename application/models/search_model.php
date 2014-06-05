@@ -70,22 +70,19 @@ class Search_model extends CI_Model
 				$personalityScore = $numerator/"400";
 			}
         }*/
-        foreach ($matches as $match) {
+        foreach ($matches as $key=>$match) {
         	$personalityDistance = 1-$this->personalityNormalisation($personality, $match["personality"]);
         	$reversePersonalityDistance = 1-$this->personalityNormalisation($match["personality"], $personality);
         	$maxPersonalityDistance = max($personalityDistance, $reversePersonalityDistance);
         	$querybrands = $this->db->query("SELECT `name` FROM `brands` WHERE id IN (SELECT `brand_id` FROM `brand_likes` WHERE `user_id` = '" . $match["id"] . "');");	
         	$matchBrands = $querybrands->result_array();
-        	$match["finalScore"] = $this->config->item('x-factor') * $maxPersonalityDistance + (1 - $this->config->item('x-factor')) * $this->brandScore($brands, $matchBrands);
+        	$matches[$key]["finalScore"] = $this->config->item('x-factor') * $maxPersonalityDistance + (1 - $this->config->item('x-factor')) * $this->brandScore($brands, $matchBrands);
         }
-        $sortedMatches = usort($matches, "sortFunction");
-        print_r($matches);
-        return $sortedMatches;
+        usort($matches, "sortFunction");
+        return $matches;
 	}
 
-	
-
-	public function personalityNormalisation($myPersonality, $otherPersonality) {
+    public function personalityNormalisation($myPersonality, $otherPersonality) {
 		$myPersonality = $this->stringToPersonalityArray($myPersonality);
 		$otherPersonality = $this->stringToPersonalityArray($otherPersonality);
 
@@ -101,9 +98,7 @@ class Search_model extends CI_Model
 			} else {
 				// Conversion needed.
 				$convertedKey = $this->switch_types($candidateTypes[$i],$userTypes[$i]);
-				echo "userkey: ".$userTypes[$i]." candidatekey: ".$candidateTypes[$i]."<br>";
-				echo "converted key:  " . $convertedKey;
-				$numerator += $personalityData[$userTypes[$i]] - (100 - $psData[$convertedKey]);
+				$numerator += $myPersonality[$userTypes[$i]] - (100 - $otherPersonality[$convertedKey]);
 			}
 		}
 		// Devide by 400 to get the normalized score.
@@ -145,7 +140,7 @@ class Search_model extends CI_Model
     }
 
 	public function DicesCoefficient($itemset1, $itemset2)
-    {
+    {        
         $intersect = array_intersect($itemset1, $itemset2);
         return ((2 * count($intersect)) / (count($itemset1) + count($itemset2)));
     }
@@ -189,25 +184,38 @@ class Search_model extends CI_Model
 
 	public function brandScore($set1, $set2)
     {
+        //we need to transform the layout of these arrays
+        $itemset1 = array();
+        $itemset2 = array();
+        foreach($set1 as $item)
+        {
+            array_push($itemset1, $item['name']);
+        }
+        foreach($set2 as $item)
+        {
+            array_push($itemset2, $item['name']);
+        }       
+        
         switch($this->config->item('sim_measure'))
         {
             case"Dice":
-                return $this->DicesCoefficient($set1, $set2);
+                return $this->DicesCoefficient($itemset1, $itemset2);
             break;
             case"Jaccard":
-                return $this->JaccardsCoefficient($set1, $set2);
+                return $this->JaccardsCoefficient($itemset1, $itemset2);
             break;
             case"Cosine":
-                return $this->CosineCoefficient($set1, $set2);
+                return $this->CosineCoefficient($itemset1, $itemset2);
             break;
             case"Overlap":
-                return $this->OverlapCoefficient($set1, $set2);
+                return $this->OverlapCoefficient($itemset1, $itemset2);
             break;
             
         }
     }
 }
- function sortFunction($a, $b) {
+
+function sortFunction($a, $b) {
 	if ($a["finalScore"] == $b["finalScore"]) {
 		return 0;
 	}

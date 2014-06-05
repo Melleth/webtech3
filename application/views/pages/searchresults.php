@@ -1,9 +1,7 @@
+<h1>matches (views/pages/searchresult.php)</h1>
 <?php
-	//$matches contains the found matches
-	//TODO: IMPLEMENt
-	printf($matches);
 	foreach($matches as $match) {
 		//display the matches
-		echo $match['name'] . ' '. $match['gender']. "<br>";
+		echo $match['name'] . ' '. $match['finalScore']. "<br>";
 	}
 ?>
