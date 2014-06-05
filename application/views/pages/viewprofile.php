@@ -88,8 +88,10 @@ function getDeleteConfirm()
 			Brands: " . $brands . "<br />
 			Email: <input type =\"text\" value=\"".$profile->email."\" name=\"email\" /> </br>
 			<input type=\"submit\" name=\"submit\" value=\"Update Profile\" /> <br>
-			<a href=\"".base_url()."index.php/login/logout\">Logout</a>
+			<a href=\"".base_url()."index.php/login/logout\">Logout</a><br />
+            <a href=\"".base_url()."index.php/upload/removeProfilePic\">Remove Profile Picture</a><br />
             <a href=\"#\" onClick=\"getDeleteConfirm()\">Delete Account</a>
+            
 		</form>";
 
 	}
