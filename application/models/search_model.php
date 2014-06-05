@@ -76,9 +76,13 @@ class Search_model extends CI_Model
         	$maxPersonalityDistance = max($personalityDistance, $reversePersonalityDistance);
         	$querybrands = $this->db->query("SELECT `name` FROM `brands` WHERE id IN (SELECT `brand_id` FROM `brand_likes` WHERE `user_id` = '" . $match["id"] . "');");	
         	$matchBrands = $querybrands->result_array();
+<<<<<<< HEAD
             
             $x = $this->config->item('xfactor');
         	$matches[$key]["finalScore"] = $x * $maxPersonalityDistance + (1 - $x) * $this->brandScore($brands, $matchBrands);
+=======
+        	$matches[$key]["finalScore"] = $this->config->item('x-factor') * $maxPersonalityDistance + (1 - $this->config->item('x-factor')) * $this->brandScore($brands, $matchBrands);
+>>>>>>> 9ffe7f498ef3d1285cb170c47c28e21926b724a0
         }
         usort($matches, "sortFunction");
         return $matches;
