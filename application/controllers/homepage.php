@@ -6,6 +6,7 @@ class Homepage extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model("Profile_model");
+		$this->load->model("Likes_model");
 		$this->load->helper('url');
 		$this->load->library('session');
 	}
@@ -49,6 +50,7 @@ class Homepage extends CI_Controller
 		$data['title'] = "Viewing profile";
 		$data['loggedin'] = ($this->session->userdata('loggedin') == true);
 		$data['user'] = $this->session->userdata('user');
+		$data['liked'] = $this->Likes_model->userLikesUser($user["id"], $data["id"]);
 		// Do profile page form stuff, if we're the owner of the profile we are viewing.
 		if ($data['owner']) {
 			$this->load->helper('form');

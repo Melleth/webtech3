@@ -35,8 +35,11 @@ function getDeleteConfirm()
 	if ($loggedin) {
 		// We are logged in, therefore we can view more stuff.
 		// Declerate some values.
-        
-        $likestring = "<a href=\"". base_url() . "index.php/likes/like/" . $profile->id . "\">Like</a> this user, and be able to message them!";
+		if ($liked) {
+			$likestring = "You liked this profile!";
+		} else {
+			$likestring = "<a href=\"". base_url() . "index.php/likes/like/" . $profile->id . "\">Like</a> this user, and be able to message them!";	
+		}
         
 		if ($profile->profile_pic != "") {
 			$imgString = '<img class="viewPageImg" src="' . base_url() . 'uploads/'.$profile->profile_pic.'"></img>';
