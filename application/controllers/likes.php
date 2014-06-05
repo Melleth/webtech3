@@ -54,6 +54,12 @@ class Likes extends CI_Controller
         echo "<br />empty space behing the = means false";
     }
     
+    public function updateLikeTest($id)
+    {
+        $user = $this->session->userdata('user');
+        $this->Likes_model->updatePersonality($id, $user);   
+    }
+    
     public function received()
     {
         $this->checkLogin();
