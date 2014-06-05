@@ -102,6 +102,7 @@
     <br />
     This is how I am!<br />
     <input type="checkbox" name="confirm">I am sure I answered correctly!
+    <p>Als u nog geen merk voorkeuren heeft aangegeven word u na afronding van deze test doorverwezen naar de betreffende pagina.</p>
 	<input type="submit" name="submit" value="Submit!" />
 
 </form>

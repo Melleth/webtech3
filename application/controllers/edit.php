@@ -255,13 +255,17 @@ class Edit extends CI_Controller
                 $partnerstring .= "P" . $j;
             }
             
-            echo 'result: '. $resultstring.'<br>';
-            echo 'partner: '. $partnerstring;
             
             if(!$this->session->userdata('searchinprogress')) //we are doing the test for a user
             {
                 $this->Profile_model->set_personality($user['id'], $resultstring, $partnerstring);
-                $this->output->set_header('refresh:0;url='.base_url().'index.php/homepage/view/self');
+
+                // Check if the user has their brands set.
+                if (count($this->Profile_model->get_profile($user["id"])->brands) == 0) {
+                    $this->output->set_header('refresh:0;url='.base_url().'index.php/edit/brands');
+                } else {
+                    $this->output->set_header('refresh:0;url='.base_url().'index.php/homepage/view/self');    
+                }
             }
             else //we are doing the test for a non-member match-search 
             {
