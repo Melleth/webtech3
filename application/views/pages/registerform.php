@@ -1,15 +1,56 @@
-<h2>Register Form (views/pages/registerform.php)</h2>
-
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Disable the submit button.
+        $('#registerForm input[type="submit"]').attr('disabled','disabled');
+        // Initialize listeners for all fields that trigger validation
+        $('#registerForm input[type="text"]').each(function() {
+            $(this).keyup(validationCheck);
+        });
+        $('#registerForm input[type="password"]').keyup(validationCheck);
+        $('#registerForm input[type="date"]').keyup(validationCheck);
+        $('#registerForm textarea').keyup(validationCheck);
+        function validationCheck() {
+            if ($('#registerForm input[type="password"]').val().length == 0) {
+                $('#registerForm input[type="submit"]').attr('disabled','disabled');
+                return;
+            }
+            if ($('#registerForm textarea').val().length == 0) {
+                $('#registerForm input[type="submit"]').attr('disabled','disabled');
+                return;
+            }
+            if ($('#registerForm input[type="date"]').val().length == 0) {
+                $('#registerForm input[type="submit"]').attr('disabled','disabled');
+                return;
+            }
+            var validText = [];
+            $('#registerForm input[type="text"]').each(function() {
+                if ($(this).val().length == 0) {
+                    validText.push(false);
+                } else {
+                    validText.push(true);
+                }
+            });
+            for (var i=0; i<5; i++) {
+                if (validText[i] == false) { 
+                    $('#registerForm input[type="submit"]').attr('disabled','disabled');
+                    return;
+                }
+            }
+            $('#registerForm input[type="submit"]').removeAttr('disabled');
+        }
+    });
+    
+</script>
 <?php echo validation_errors(); ?>
 
-<?php echo form_open('login/register'); ?>
+<?php echo form_open('login/register', array('id' => 'registerForm')); ?>
 
     <br />
     <br />
-	Nickname: <input type="text" name="nickname"></input><br />
-    Real name: <input type="text" name="realname"></input><br />
-    Password: <input type="password" name="password"></input><br />
-    Email: <input type="text" name="email"></input><br />
+	Nickname: <input type="text" name="nickname"><br />
+    Real name: <input type="text" name="realname"><br />
+    Password: <input type="password" name="password"><br />
+    Email: <input type="text" name="email"><br />
     Gender: 
     <select name="gender">
         <option value="1">Female</option>
