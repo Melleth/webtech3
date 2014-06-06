@@ -36,14 +36,14 @@ class Likes extends CI_Controller
         if($this->Likes_model->userLikesUser($user['id'], $id))
         {
             echo "you already like this person";
-            $this->output->set_header('refresh:1;url='.base_url().'index.php/Homepage/view/' . $id);
+            $this->output->set_header('refresh:1;url='.base_url().'index.php/homepage/view/' . $id);
             return;
         }
         
         $this->Likes_model->updatePersonality($id, $user);
         
         $this->Likes_model->insertLike($user['id'], $id);
-        $this->output->set_header('refresh:0;url='.base_url().'index.php/Homepage/view/' . $id);
+        $this->output->set_header('refresh:0;url='.base_url().'index.php/homepage/view/' . $id);
     }
     
     public function check($liker, $likes)

@@ -2,11 +2,11 @@
 <a href="<?php echo base_url() ?>index.php/likes/given">Who have I liked?</a><br />
 <a href="<?php echo base_url() ?>index.php/likes/mutual">With whom do i have a mutual like?</a><br />
 
-<h1> people whom I liked! </h1>
+<h1>People who I like</h1>
 
 <?php
     foreach($likes as $like)
     {
-        echo '<a href="'. base_url() . 'index.php/Homepage/view/' . $like['id'] . '/">' . $like['name'] . '</a><br />';
+        echo '<a href="'. base_url() . 'index.php/homepage/view/' . $like['id'] . '/">' . $like['name'] . '</a><br />';
     }
 ?>

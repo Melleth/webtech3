@@ -61,6 +61,7 @@ function getDeleteConfirm()
 	} else {
     
         $likestring = "<a href=\"". base_url() . "index.php/login/register\">Create an account</a> to get in touch with this user!";
+        $emailString = "hidden";
 		// Do stuff for the anonymous user.
 		// Set profile image to anoymous user thumbnails
 		$imgString = "<img class=\"viewPageImg\" src=\"" . base_url() . "/includes/img/silhouetteMan.png\" alt=\"Silhouette\">";

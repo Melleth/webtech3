@@ -1,5 +1,9 @@
-<h1>matches (views/pages/searchresult.php)</h1>
+<h1>Matches</h1>
 <?php
+    if(count($matches) < 1)
+    {
+        echo "We have no matches in our database for you :("; 
+    }
 	foreach($matches as $profile) {
 		//display the matches
 		//echo $match['name'] . ' '. $match['finalScore']. "<br>";

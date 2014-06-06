@@ -1,4 +1,4 @@
-view (views/pages/messaging/view.php)
+View Message
 <?php
     foreach($messages as $msg)
     {

@@ -22,7 +22,7 @@ class Search_model extends CI_Model
         // If the client is just interested in 1 gender, we can leave it be.
         $query = $this->db->query("SELECT * FROM profile WHERE (gender = " . $genderPreference . ") AND date(birthdate) BETWEEN date('now', '-" . $maxage . " years') AND date('now', '-" . $minage . " years')");
         // Put all the potential matches (age and genderPreference included in a new array matches[])
-        $matches = [];
+        $matches = array();
         foreach($query->result_array() as $row) {
         	if ($me == "anon" || ($this->isInterestedInMe($me, $row) && $this->isInterestedInMe($row, $me))) {
         		array_push($matches, $row);
@@ -137,7 +137,7 @@ class Search_model extends CI_Model
 
     public function stringToPersonalityArray($string) {
     	$splittedPersonality = preg_split("/-/", $string);
-        $personalityData = [];
+        $personalityData = array();
         foreach ($splittedPersonality as $key => $value) {
         	$dichotomy = $value[0];
         	$score = substr($value, 1, strlen($value)-1);

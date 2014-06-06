@@ -1,1 +1,1 @@
-hoi dit is een coole dating website yeah
+This is DataDate, the dating website for awesome people!

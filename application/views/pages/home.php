@@ -2,7 +2,7 @@
 function getProfiles()
 {
     $.ajax({
-        url: "<?php echo base_url(); ?>index.php/Homepage/display/",
+        url: "<?php echo base_url(); ?>index.php/homepage/display/",
         success: function(html)
         {
             $( "#profileList" ).empty ( );

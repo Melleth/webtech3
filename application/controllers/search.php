@@ -23,7 +23,8 @@ class Search extends CI_Controller
             $data['copyright'] = 'By Victor And Siemen';
             // Set the profile data so we can excecute a search
             // Make sure it is up to date by reloading it from the db (assuming the id is still the same as it shoudl never change).
-            $user = $this->Profile_model->get_profile($this->session->userdata('user')['id']);
+            $user = $this->session->userdata('user');
+            $user = $this->Profile_model->get_profile($user['id']);
             // Check if a user has done a personality test
             if (strlen($user->personality) > 2) {
                 //do a search with the profile data

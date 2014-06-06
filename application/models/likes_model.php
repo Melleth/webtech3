@@ -105,7 +105,7 @@ class Likes_model extends CI_Model
     
     public function stringToPersonalityArray($string) {
     	$splittedPersonality = preg_split("/-/", $string);
-        $personalityData = [];
+        $personalityData = array();
         foreach ($splittedPersonality as $key => $value) {
         	$dichotomy = $value[0];
         	$score = substr($value, 1, strlen($value)-1);

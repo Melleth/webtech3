@@ -1,7 +1,7 @@
 <a href="<?php echo base_url() ?>index.php/messaging/overview">Inbox</a> - 
 <a href="<?php echo base_url() ?>index.php/messaging/compose">Write Message</a><br />
 
-<h2>Compose message (views/pages/messaging/compose.php</h2>
+<h2>Compose Message</h2>
 
 <?php echo validation_errors(); ?>
 

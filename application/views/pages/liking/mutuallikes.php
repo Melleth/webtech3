@@ -7,6 +7,6 @@
 <?php
     foreach($likes as $like)
     {
-        echo '<a href="'. base_url() . 'index.php/Homepage/view/' . $like['id'] . '/">' . $like['name'] . '</a><br />';
+        echo '<a href="'. base_url() . 'index.php/homepage/view/' . $like['id'] . '/">' . $like['name'] . '</a><br />';
     }
 ?>

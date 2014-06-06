@@ -1,4 +1,4 @@
-<h2>Login Form (views/pages/loginform.php)</h2>
+<h2>Login</h2>
 
 <?php echo validation_errors(); ?>
 

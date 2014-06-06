@@ -1,4 +1,4 @@
-<h2>Edit brands (views/pages/editbrandsform.php)</h2>
+<h2>Like Brands</h2>
 
 <?php echo validation_errors(); ?>
 

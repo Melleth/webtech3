@@ -15,8 +15,6 @@
     <input width="5" type="text" name="ageMin"></input> and <input width="5" type="text" name="ageMax"></input>
     <br />
     <br />
-    <i>TODO!!! MORE SEARCH CRITERIA HERE!!!</i>
-    <br />
 	<input type="submit" name="submit" value="Find A Match!" />
 
 </form>

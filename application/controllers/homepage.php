@@ -26,14 +26,13 @@ class Homepage extends CI_Controller
 	{
 		$user = $this->session->userdata('user');
 		$profiles = $this->Profile_model->get_profiles();
-		$data["profiles"] = [];
-		foreach ($profiles as $profile) {
+		foreach ($profiles as $key => $profile) {
 			// Set the data
-			$profile["liked"] = $this->Likes_model->userLikesUser($user["id"], $profile["id"]);
-			$profile["mutualLike"] = ($this->Likes_model->userLikesUser($user["id"], $profile["id"]) && $this->Likes_model->userLikesUser($profile["id"], $user["id"]));
+			$profiles[$key]["liked"] = $this->Likes_model->userLikesUser($user["id"], $profile["id"]);
+			$profiles[$key]["mutualLike"] = ($this->Likes_model->userLikesUser($user["id"], $profile["id"]) && $this->Likes_model->userLikesUser($profile["id"], $user["id"]));
 			// Put the adjusted profile in the data
-			array_push($data["profiles"], $profile);
 		}
+        $data["profiles"] = $profiles;
 		$data['copyright'] = 'By Victor And Siemen';
 		$data['title'] = "Home";
         $data['loggedin'] = $this->session->userdata('loggedin');

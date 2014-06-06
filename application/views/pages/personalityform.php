@@ -1,4 +1,4 @@
-<h2>Personality form(views/pages/personalityform.php)</h2>
+<h2>Personality Test</h2>
 
 <?php
     echo validation_errors(); 

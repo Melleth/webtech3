@@ -20,7 +20,7 @@
             if($profile['gender'] == 1)
                 $imgString = "<img class=\"homepageSilhouette\" src=\"" . base_url() . "/includes/img/silhouetteWoman.png\" alt=\"Silhouette\">";
         }    
-            $imgLink = "<a href=\"" . base_url() . "index.php/Homepage/view/" . $profile['id'] . "\">" . $imgString . "</a>";
+            $imgLink = "<a href=\"" . base_url() . "index.php/homepage/view/" . $profile['id'] . "\">" . $imgString . "</a>";
         
 		$c= date('Y-M-D');
 		$y= date('Y-M-D', strtotime($profile['birthdate']));
