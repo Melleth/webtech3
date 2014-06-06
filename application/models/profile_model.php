@@ -9,7 +9,7 @@ class Profile_model extends CI_Model
 	
 	public function get_profiles()
 	{
-		$query = $this->db->query('SELECT * FROM profile ORDER BY RAND() LIMIT 6');
+		$query = $this->db->query('SELECT * FROM profile ORDER BY RANDOM() LIMIT 6');
 		return $query->result_array();
 	}
 	

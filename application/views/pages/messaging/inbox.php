@@ -28,7 +28,7 @@
                         ' . $msg['subject'] . '
                     </td>
                     <td>
-                        <b><a href="' . base_url() . 'index.php/messaging/view/' . $msg['id'] . '">Read</a> <a href="' . base_url() . 'index.php/messaging/delete/' . $msg['id'] . '">Delete</a></b>
+                        <b><a href="' . base_url() . 'index.php/messaging/view/' . $msg['msg_id'] . '">Read</a> <a href="' . base_url() . 'index.php/messaging/delete/' . $msg['msg_id'] . '">Delete</a></b>
                     </td>
                 </tr>';
         }

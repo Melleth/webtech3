@@ -3,12 +3,12 @@
 * security (geen XSS of SQL injections, gebruik https voor login enzo)
 x personality test verplict maken gelijk na account aanmaken! (javascript check en gelijk doorverwijzen? "u heeft de personality test nog niet geledaan, wilt u dat nu doen?", als die vraag heel vaak komt wordt je er vanzelf zat van en doe je de test)
 x invullen van brands verplicht maken (zie hierboven)
-* testen op randgevallen, lege velden, NaN waarden etc
+x testen op randgevallen, lege velden, NaN waarden etc
 * client side input validation (daar zeiken ze best hard over) NOTE: registratie gedaan (is belangrijkst... iig alle fields moeten ingevuld zijn voordat je op submit kan drukken)
-* visuele feedback over likes (op een profiel moet je gelijk kunnen zien of je deze persoon al hebt geliked)
+x visuele feedback over likes (op een profiel moet je gelijk kunnen zien of je deze persoon al hebt geliked)
 * messages en like systeem styling (is nu heeeeel lelijk en basic, puur functioneel)
 * onderzoeken verschillen tussen coeffiecienten merken (ik zag geen verschil bij gebruik van een andere overlapcoefficient in de finalScore???)
-* profiel detailpagina alle vereiste velden weergeven
+x profiel detailpagina alle vereiste velden weergeven
 * profiel edit pagina kan nog niet alle vereiste velden editen
 * meer dan 6 matching resultaten afhandelen met volgende/vorige knoppen
 * foto geheel verwijderen (nu kan alleen aanpassen)
@@ -16,7 +16,7 @@ x op profieloverzichtjes (dus ook op homepage) moet het duidelijk zijn of/dat je
 
 * HTML5 check wc3
 * CSS3 check
-* sqlite ipv mysql
+x sqlite ipv mysql
 * op ICT server zetten
 
 * readme maken met

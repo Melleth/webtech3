@@ -10,10 +10,10 @@ class Messaging_model extends CI_Model
 	
 	public function getMessagesByUserID($id)
 	{
-        $query = $this->db->query("SELECT m.*, p.name 
+        $query = $this->db->query("SELECT *, p.name 
                                    FROM messages m
-                                   INNER JOIN profile p ON m.from = p.id
-                                   WHERE m.to = '" . $id . "'");
+                                   INNER JOIN profile p ON m.msg_from = p.id
+                                   WHERE m.msg_to = '" . $id . "'");
 		return $query->result_array();
 	}
     
@@ -25,11 +25,11 @@ class Messaging_model extends CI_Model
     public function getMessageByID($id, $userid)
     {
         //function is safe, you cannot view messages from other users
-        $query = $this->db->query("SELECT m.*, p.id, p.name 
+        $query = $this->db->query("SELECT *
                                    FROM messages m
-                                   INNER JOIN profile p ON m.from = p.id
-                                   WHERE m.id = '" . $id . "'
-                                   AND m.to = '" . $userid . "'");
+                                   INNER JOIN profile p ON m.msg_from = p.id
+                                   WHERE m.msg_id = '" . $id . "'
+                                   AND m.msg_to = '" . $userid . "'");
 		return $query->result_array();
     }
     

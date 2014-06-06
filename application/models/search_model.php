@@ -20,11 +20,11 @@ class Search_model extends CI_Model
         	$genderPreference = "0 OR gender = 1";
         }
         // If the client is just interested in 1 gender, we can leave it be.
-        $query = $this->db->query("SELECT * FROM profile WHERE gender = " . $genderPreference . ""); //TODO: verwerk gender en age hier (rekening houden met gender kan beide zijn)
+        $query = $this->db->query("SELECT * FROM profile WHERE (gender = " . $genderPreference . ") AND date(birthdate) BETWEEN date('now', '-" . $maxage . " years') AND date('now', '-" . $minage . " years')");
         // Put all the potential matches (age and genderPreference included in a new array matches[])
         $matches = [];
         foreach($query->result_array() as $row) {
-        	if ($this->isInterestedInMe($me, $row) && $this->isInterestedInMe($row, $me)) {
+        	if ($me == "anon" || ($this->isInterestedInMe($me, $row) && $this->isInterestedInMe($row, $me))) {
         		array_push($matches, $row);
         	}
         }
@@ -74,11 +74,22 @@ class Search_model extends CI_Model
         	$personalityDistance = 1-$this->personalityNormalisation($personality, $match["personality"]);
         	$reversePersonalityDistance = 1-$this->personalityNormalisation($match["personality"], $personality);
         	$maxPersonalityDistance = max($personalityDistance, $reversePersonalityDistance);
-        	$querybrands = $this->db->query("SELECT `name` FROM `brands` WHERE id IN (SELECT `brand_id` FROM `brand_likes` WHERE `user_id` = '" . $match["id"] . "');");	
-        	$matchBrands = $querybrands->result_array();
             
+            $querybrands = $this->db->query("SELECT `name` FROM `brands` WHERE id IN (SELECT `brand_id` FROM `brand_likes` WHERE `user_id` = '" . $match["id"] . "');");	
+            $matchBrands = $querybrands->result_array();
+            
+            if($me == "anon")
+            {
+                $querybrands = $this->db->query("SELECT `name` FROM `brands` WHERE id IN (" . $brands . ");");	
+                $myBrands = $querybrands->result_array();
+            }
+            else
+            {
+                $querybrands = $this->db->query("SELECT `name` FROM `brands` WHERE id IN (SELECT `brand_id` FROM `brand_likes` WHERE `user_id` = '" . $me->id . "');");	
+                $myBrands = $querybrands->result_array();
+            }
             $x = $this->config->item('xfactor');
-        	$matches[$key]["finalScore"] = $x * $maxPersonalityDistance + (1 - $x) * $this->brandScore($brands, $matchBrands);
+        	$matches[$key]["finalScore"] = $x * $maxPersonalityDistance + (1 - $x) * $this->brandScore($myBrands, $matchBrands);
         }
         usort($matches, "sortFunction");
         return $matches;
@@ -189,6 +200,8 @@ class Search_model extends CI_Model
         //we need to transform the layout of these arrays
         $itemset1 = array();
         $itemset2 = array();
+        
+        
         foreach($set1 as $item)
         {
             array_push($itemset1, $item['name']);

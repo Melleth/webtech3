@@ -1,52 +1,55 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP 5.1.6 or newer
- *
- * @package		CodeIgniter
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
- * @license		http://codeigniter.com/user_guide/license.html
- * @author		EllisLab Dev Team
- * @link		http://codeigniter.com
- * @since		Version 2.1.2
- * @filesource
- */
+<?php
+/* Copyright (c) 2008 - 2011, EllisLab, Inc.*/
+/* changed by:
+Sybren Stüvel(S.A.Stuvel@uu.nl), 
+Jeroen Bransen(J.Bransen@uu.nl),
+and Sjoerd Timmer(s.t.timmer@uu.nl
 
-// ------------------------------------------------------------------------
-
+changes:
+fixed the hostname and random keyword to work with sqlite.
+Intended for use on the science.uu.nl server.
+  */
 /**
  * PDO Result Class
  *
  * This class extends the parent result class: CI_DB_result
  *
  * @category	Database
- * @author		EllisLab Dev Team
- * @link		http://codeigniter.com/user_guide/database/
+ * @author		Dready
+ * @link			http://dready.jexiste.fr/dotclear/
  */
 class CI_DB_pdo_result extends CI_DB_result {
 
-	public $num_rows;
-
+	var $pdo_results = '';
+	var $pdo_index = 0;
 	/**
 	 * Number of rows in the result set
 	 *
-	 * @return	int
+	* pfff... that's ugly !!!!!!!
+	*
+	*PHP manual for PDO tell us about nom_rows :
+	* "For most databases, PDOStatement::rowCount() does not return the number of rows affected by
+	*a SELECT statement. Instead, use PDO::query() to issue a SELECT COUNT(*) statement with the
+	*same predicates as your intended SELECT statement, then use PDOStatement::fetchColumn() to
+	*retrieve the number of rows that will be returned.
+	*
+	* which means
+	* 1/ select count(*) as c from table where $where
+	* => numrows
+	* 2/ select * from table where $where
+	* => treatment
+	*
+	* Holy cow !
+	*
+	 * @access	public
+	 * @return	integer
 	 */
-	public function num_rows()
+	function num_rows()
 	{
-		if (is_int($this->num_rows))
-		{
-			return $this->num_rows;
+		if ( ! $this->pdo_results ) {
+			$this->pdo_results = $this->result_id->fetchAll(PDO::FETCH_ASSOC);
 		}
-		elseif (($this->num_rows = $this->result_id->rowCount()) > 0)
-		{
-			return $this->num_rows;
-		}
-
-		$this->num_rows = count($this->result_id->fetchAll());
-		$this->result_id->execute();
-		return $this->num_rows;
+		return sizeof($this->pdo_results);
 	}
 
 	// --------------------------------------------------------------------
@@ -59,7 +62,11 @@ class CI_DB_pdo_result extends CI_DB_result {
 	 */
 	function num_fields()
 	{
-		return $this->result_id->columnCount();
+		if ( is_array($this->pdo_results) ) {
+			return sizeof($this->pdo_results[$this->pdo_index]);
+		} else {
+			return $this->result_id->columnCount();
+		}
 	}
 
 	// --------------------------------------------------------------------
@@ -93,25 +100,11 @@ class CI_DB_pdo_result extends CI_DB_result {
 	 */
 	function field_data()
 	{
-		$data = array();
-	
-		try
+		if ($this->db->db_debug)
 		{
-			for($i = 0; $i < $this->num_fields(); $i++)
-			{
-				$data[] = $this->result_id->getColumnMeta($i);
-			}
-			
-			return $data;
+			return $this->db->display_error('db_unsuported_feature');
 		}
-		catch (Exception $e)
-		{
-			if ($this->db->db_debug)
-			{
-				return $this->db->display_error('db_unsuported_feature');
-			}
-			return FALSE;
-		}
+		return FALSE;
 	}
 
 	// --------------------------------------------------------------------
@@ -143,7 +136,7 @@ class CI_DB_pdo_result extends CI_DB_result {
 	 */
 	function _data_seek($n = 0)
 	{
-		return FALSE;
+		$this->pdo_index = $n;
 	}
 
 	// --------------------------------------------------------------------
@@ -158,6 +151,13 @@ class CI_DB_pdo_result extends CI_DB_result {
 	 */
 	function _fetch_assoc()
 	{
+		if ( is_array($this->pdo_results) ) {
+			$i = $this->pdo_index;
+			$this->pdo_index++;
+			if ( isset($this->pdo_results[$i]))
+				return $this->pdo_results[$i];
+			return null;
+		}
 		return $this->result_id->fetch(PDO::FETCH_ASSOC);
 	}
 
@@ -172,12 +172,23 @@ class CI_DB_pdo_result extends CI_DB_result {
 	 * @return	object
 	 */
 	function _fetch_object()
-	{	
-		return $this->result_id->fetchObject();
+	{
+		if ( is_array($this->pdo_results) ) {
+			$i = $this->pdo_index;
+			$this->pdo_index++;
+			if ( isset($this->pdo_results[$i])) {
+				$back = new stdClass();
+				foreach ( $this->pdo_results[$i] as $key => $val ) {
+					$back->$key = $val;
+				}
+				return $back;
+			}
+			return null;
+		}
+		return $this->result_id->fetch(PDO::FETCH_OBJ);
 	}
 
 }
 
 
-/* End of file pdo_result.php */
-/* Location: ./system/database/drivers/pdo/pdo_result.php */
+?>
